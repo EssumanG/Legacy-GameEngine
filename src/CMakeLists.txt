@@ -1,10 +1,13 @@
 include(CTest)
 enable_testing()
+include_directories("${CMAKE_SOURCE_DIR}/vendor/spdlog/include")
 
 set(HEADERS "${HAZEL_SOURCE_DIR}/include/Hazel/hazel.h" 
             "Application.h"
-            "EntryPoint.h")
-set(SOURCES "Application.cpp")
+            "EntryPoint.h"
+            "log.h")
+set(SOURCES "Application.cpp"
+            "log.cpp")
 
 add_library(hazel SHARED ${HEADERS} ${SOURCES})
 
