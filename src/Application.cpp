@@ -1,10 +1,11 @@
+#include "hz_pch.h"
 #include "Application.h"
 #include "Events/ApplicationEvent.h"
 #include "log.h"
 
 namespace Hazel
 {
-    Application::Application()
+    Application::Application() 
     {
     }
     
