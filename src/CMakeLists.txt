@@ -14,9 +14,13 @@ set(HEADERS "${HAZEL_SOURCE_DIR}/include/Hazel/hazel.h"
             "Events/KeyEvent.h"
             "Events/MouseEvent.h"
             "Events/ApplicationEvent.h"
-            "Window.h")
+            "Window.h"
+            "Layer.h"
+            "LayerStack.h")
 set(SOURCES "Application.cpp"
-            "log.cpp")
+            "log.cpp"
+            "Layer.cpp"
+            "LayerStack.cpp")
 
 if (UNIX)
     list(APPEND HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Unix/UnixWindow.h")
