@@ -1,10 +1,11 @@
 #pragma once
-#include "Events/Event.h"
+
+#include "Event.h"
 
 
 namespace Hazel{
 
-    class WindowResizedEvent : Event
+    class WindowResizedEvent : public Event
     {
     public:
         WindowResizedEvent(unsigned int width, unsigned int height)

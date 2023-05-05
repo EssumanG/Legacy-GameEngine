@@ -1,6 +1,8 @@
 include(CTest)
 enable_testing()
-include_directories("${CMAKE_SOURCE_DIR}/vendor/spdlog/include" "${CMAKE_SOURCE_DIR}/src")
+include_directories("${CMAKE_SOURCE_DIR}/vendor/spdlog/include" 
+                    "${CMAKE_SOURCE_DIR}/src"
+                    "${CMAKE_SOURCE_DIR}/vendor/GLFW/include")
 
 
 set(HEADERS "${HAZEL_SOURCE_DIR}/include/Hazel/hazel.h" 
@@ -11,11 +13,24 @@ set(HEADERS "${HAZEL_SOURCE_DIR}/include/Hazel/hazel.h"
             "Events/Event.h"
             "Events/KeyEvent.h"
             "Events/MouseEvent.h"
-            "Events/ApplicationEvent.h")
+            "Events/ApplicationEvent.h"
+            "Window.h")
 set(SOURCES "Application.cpp"
             "log.cpp")
 
+if (UNIX)
+    list(APPEND HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Unix/UnixWindow.h")
+    list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Unix/UnixWindow.cpp")
+endif()
+
 add_library(hazel SHARED ${HEADERS} ${SOURCES})
+
+target_link_libraries(hazel glfw)
+
+
+# Should be defined only on Debug mode
+target_compile_definitions(hazel PUBLIC HZ_ENABLE_ASSERTS)
+
 
 target_precompile_headers(hazel PUBLIC "hz_pch.h")
 
@@ -25,3 +40,5 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
 message("DIR  ${CMAKE_SOURCE_DIR}/src")
+
+message("all header files: ${HEADERS}")

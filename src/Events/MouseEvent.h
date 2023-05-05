@@ -51,7 +51,7 @@
 
     };
 
-    class MouseButtonEvent : Event
+    class MouseButtonEvent : public Event
     {
     public:
         inline int GetMouseButton() const { return m_Button; }
@@ -64,7 +64,7 @@
         int m_Button;
     };
 
-    class MouseButtonPressedEvent : MouseButtonEvent
+    class MouseButtonPressedEvent : public MouseButtonEvent
     {
         public:
             MouseButtonPressedEvent(int button)
@@ -80,7 +80,7 @@
         private:
     }; 
 
-    class MouseButtonReleasedEvent : MouseButtonEvent
+    class MouseButtonReleasedEvent : public MouseButtonEvent
     {
         public:
             MouseButtonReleasedEvent(int button)

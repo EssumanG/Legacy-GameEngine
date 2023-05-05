@@ -1,4 +1,5 @@
 #include "Test.h"
+#include "hz_pch.h"
 
 
 namespace Hazel
