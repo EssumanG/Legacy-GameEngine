@@ -1,4 +1,4 @@
-#include "../src/Test.h"
+// #include "../src/Test.h"
 #include <Hazel/hazel.h>
 
 class ExampleLayer : public Hazel::Layer
@@ -25,7 +25,8 @@ class Sandbox : public Hazel::Application
 public:
     Sandbox()
     {
-        PushLayer(new ExampleLayer());
+        // PushLayer(new ExampleLayer());
+        PushLayer(new Hazel::ImGuiLayer());
     }
 
     ~Sandbox()
