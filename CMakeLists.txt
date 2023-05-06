@@ -5,6 +5,7 @@ include(CTest)
 enable_testing()
 
 add_subdirectory(vendor/GLFW)
+add_subdirectory(vendor/glad)
 
 add_subdirectory(src)
 add_subdirectory(Sandbox)
