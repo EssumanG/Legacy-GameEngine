@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Core.h"
+#include "../hz_pch.h"
 
 
 
@@ -11,7 +12,7 @@ namespace Hazel {
         None = 0,
         WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
         AppTick, AppUpdate, AppRender, 
-        KeyPressed, KeyReleased,
+        KeyPressed, KeyReleased, KeyTyped,
         MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
     };
 

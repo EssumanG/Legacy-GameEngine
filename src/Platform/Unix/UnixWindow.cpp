@@ -155,6 +155,14 @@ namespace Hazel
             MouseMovedEvent event((float)xpos, (float)ypos);
             data.EventCallback(event);
         });
+
+        glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode)
+        {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window); 
+
+            KeyTypedEvent event(keycode);
+            data.EventCallback(event);
+        });
     }
 
     void UnixWindow::ShutDown()
