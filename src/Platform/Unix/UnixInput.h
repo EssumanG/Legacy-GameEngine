@@ -1,7 +1,7 @@
 #pragma once
 #include "Input.h"
 
-namespace Hazel 
+namespace Legacy 
 {
     class UnixInput : public Input
     {

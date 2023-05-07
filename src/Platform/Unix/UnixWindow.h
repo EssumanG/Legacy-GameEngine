@@ -8,7 +8,7 @@
 #include "Events/MouseEvent.h"
 #include "Events/KeyEvent.h"
 
-namespace Hazel
+namespace Legacy
 {
     class UnixWindow : public Window
     {

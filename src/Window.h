@@ -1,10 +1,10 @@
 #pragma once
-#include "hz_pch.h"
+#include "lg_pch.h"
 
 #include "Core.h"
 #include "Events/Event.h"
 
-namespace Hazel 
+namespace Legacy 
 {
     struct WindowProps
     {
@@ -12,7 +12,7 @@ namespace Hazel
         unsigned int Width;
         unsigned int Height;
 
-        WindowProps(const std::string title = "Hazel Engine", unsigned int width = 1280,
+        WindowProps(const std::string title = "Legacy Engine", unsigned int width = 1280,
                     unsigned int height = 720)
             :Title(title), Width(width), Height(height)
             {

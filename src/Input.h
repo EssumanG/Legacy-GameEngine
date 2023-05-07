@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace Hazel
+namespace Legacy
 {
     
     class Input
@@ -23,4 +23,4 @@ namespace Hazel
         static Input* s_Instance;
     
     };
-} // namespace Hazel
+} // namespace Legacy

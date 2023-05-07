@@ -1,11 +1,11 @@
 #include "Test.h"
-#include "hz_pch.h"
+#include "lg_pch.h"
 
 
-namespace Hazel
+namespace Legacy
 {
     void Print()
     {
-        printf("Welcome to Hazel!\n");
+        printf("Welcome to Legacy!\n");
     }
-} // namespace Hazel
+} // namespace Legacy

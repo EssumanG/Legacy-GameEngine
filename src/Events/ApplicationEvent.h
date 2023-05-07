@@ -3,7 +3,7 @@
 #include "Event.h"
 
 
-namespace Hazel{
+namespace Legacy{
 
     class WindowResizedEvent : public Event
     {

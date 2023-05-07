@@ -1,9 +1,9 @@
-#include "hz_pch.h"
+#include "lg_pch.h"
 #include "log.h"
 
 #include "spdlog/sinks/stdout_color_sinks.h"
 
-namespace Hazel {
+namespace Legacy {
 
         std::shared_ptr<spdlog::logger> log::s_CoreLogger;
         std::shared_ptr<spdlog::logger> log::s_ClientLogger;

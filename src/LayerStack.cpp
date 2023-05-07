@@ -1,6 +1,6 @@
 #include "LayerStack.h"
 
-namespace Hazel{
+namespace Legacy{
     LayerStack::LayerStack()
     {
         m_LayerInsert = m_Layers.begin();

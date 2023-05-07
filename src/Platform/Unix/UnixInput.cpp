@@ -1,10 +1,10 @@
-#include "hz_pch.h"
+#include "lg_pch.h"
 #include "UnixInput.h"
 #include "GLFW/glfw3.h"
 #include "Application.h"
 
 
-namespace Hazel
+namespace Legacy
 {
     Input* Input::s_Instance = new UnixInput;
 

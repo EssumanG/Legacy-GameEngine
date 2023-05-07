@@ -1,9 +1,9 @@
 #pragma once 
  
-#include "../Events/Event.h"
+#include "Event.h"
 
 
- namespace Hazel {
+ namespace Legacy {
     class MouseMovedEvent : public Event
     {
     public:

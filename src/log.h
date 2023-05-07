@@ -4,7 +4,7 @@
 // #include "spdlog/fmt/ostr.h"
 
 
-namespace Hazel {
+namespace Legacy {
 
     class log
     {
@@ -21,15 +21,15 @@ namespace Hazel {
 }
 
 //Core log macros
-#define HZ_CORE_TRACE(...)      ::Hazel::log::GetCoreLogger()->trace(__VA_ARGS__)
-#define HZ_CORE_INFO(...)       ::Hazel::log::GetCoreLogger()->info (__VA_ARGS__)
-#define HZ_CORE_WARN(...)       ::Hazel::log::GetCoreLogger()->warn(__VA_ARGS__)
-#define HZ_CORE_ERROR(...)      ::Hazel::log::GetCoreLogger()->error(__VA_ARGS__)
-#define HZ_CORE_FATAL(...)      ::Hazel::log::GetCoreLogger()->fatal(__VA_ARGS__)
+#define LG_CORE_TRACE(...)      ::Legacy::log::GetCoreLogger()->trace(__VA_ARGS__)
+#define LG_CORE_INFO(...)       ::Legacy::log::GetCoreLogger()->info (__VA_ARGS__)
+#define LG_CORE_WARN(...)       ::Legacy::log::GetCoreLogger()->warn(__VA_ARGS__)
+#define LG_CORE_ERROR(...)      ::Legacy::log::GetCoreLogger()->error(__VA_ARGS__)
+#define LG_CORE_FATAL(...)      ::Legacy::log::GetCoreLogger()->fatal(__VA_ARGS__)
 
 //Client log macros
-#define HZ_TRACE(...)      ::Hazel::log::GetCoreLogger()->trace(__VA_ARGS__)
-#define HZ_INFO(...)       ::Hazel::log::GetCoreLogger()->info (__VA_ARGS__)
-#define HZ_WARN(...)       ::Hazel::log::GetCoreLogger()->warn(__VA_ARGS__)
-#define HZ_ERROR(...)      ::Hazel::log::GetCoreLogger()->error(__VA_ARGS__)
-#define HZ_FATAL(...)      ::Hazel::log::GetCoreLogger()->fatal(__VA_ARGS__)
+#define LG_TRACE(...)      ::Legacy::log::GetCoreLogger()->trace(__VA_ARGS__)
+#define LG_INFO(...)       ::Legacy::log::GetCoreLogger()->info (__VA_ARGS__)
+#define LG_WARN(...)       ::Legacy::log::GetCoreLogger()->warn(__VA_ARGS__)
+#define LG_ERROR(...)      ::Legacy::log::GetCoreLogger()->error(__VA_ARGS__)
+#define LG_FATAL(...)      ::Legacy::log::GetCoreLogger()->fatal(__VA_ARGS__)

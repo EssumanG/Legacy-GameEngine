@@ -2,9 +2,9 @@
 
 #include "Core.h"
 #include "Layer.h"
-#include "hz_pch.h"
+#include "lg_pch.h"
 
-namespace Hazel
+namespace Legacy
 {
     
     class LayerStack
@@ -25,4 +25,4 @@ namespace Hazel
         std::vector<Layer*> m_Layers;
         std::vector<Layer*>::iterator m_LayerInsert;
     };
-} // namespace Hazel
+} // namespace Legacy

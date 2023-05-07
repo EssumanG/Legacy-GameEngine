@@ -1,6 +1,6 @@
 #include "Layer.h"
 
-namespace Hazel
+namespace Legacy
 {   
     Layer::Layer(const std::string& debugName)
         :m_DebugName(debugName)
@@ -11,5 +11,5 @@ namespace Hazel
     {
         
     }
-} // namespace Hazel
+} // namespace Legacy
 

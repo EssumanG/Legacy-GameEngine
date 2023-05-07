@@ -1,11 +1,11 @@
 #pragma once
 
 #include "../Core.h"
-#include "../hz_pch.h"
+#include "../lg_pch.h"
 
 
 
-namespace Hazel {
+namespace Legacy {
     
     enum class EventType
     {

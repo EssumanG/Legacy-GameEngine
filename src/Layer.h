@@ -1,11 +1,11 @@
 #pragma once
 
-#include "hz_pch.h"
+#include "lg_pch.h"
 #include "Core.h"
 #include "Events/Event.h"
 
 
-namespace Hazel
+namespace Legacy
 {
     class Layer
     {
@@ -23,4 +23,4 @@ namespace Hazel
     protected:
         std::string m_DebugName;
     };
-} // namespace Hazel
+} // namespace Legacy

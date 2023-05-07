@@ -7,7 +7,7 @@
 #include "../Events/MouseEvent.h"
 #include "../Events/KeyEvent.h"
 
-namespace Hazel 
+namespace Legacy 
 {
 
     class ImGuiLayer : public Layer
@@ -38,4 +38,4 @@ namespace Hazel
     };
     
     
-} // namespace Hazel
+} // namespace Legacy

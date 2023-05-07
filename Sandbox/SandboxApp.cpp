@@ -1,7 +1,7 @@
 // #include "../src/Test.h"
-#include <Hazel/hazel.h>
+#include <Legacy/legacy.h>
 
-class ExampleLayer : public Hazel::Layer
+class ExampleLayer : public Legacy::Layer
 {
 public:
     ExampleLayer()
@@ -11,22 +11,22 @@ public:
 
     void OnUpdate() override
     {
-        HZ_INFO("ExampleLayer::Update");
+        LG_INFO("ExampleLayer::Update");
 
     }
 
-    void OnEvent(Hazel::Event& event) override
+    void OnEvent(Legacy::Event& event) override
     {
-        HZ_TRACE("{0}", event.ToString());
+        LG_TRACE("{0}", event.ToString());
     }
 };
-class Sandbox : public Hazel::Application
+class Sandbox : public Legacy::Application
 {
 public:
     Sandbox()
     {
         PushLayer(new ExampleLayer());
-        PushOverlay(new Hazel::ImGuiLayer());
+        PushOverlay(new Legacy::ImGuiLayer());
     }
 
     ~Sandbox()
@@ -36,7 +36,7 @@ public:
 
 };
 
-Hazel::Application* Hazel::CreateApplication()
+Legacy::Application* Legacy::CreateApplication()
 {
     return new Sandbox();
 }

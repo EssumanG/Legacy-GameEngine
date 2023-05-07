@@ -3,7 +3,7 @@
 #include "Events/ApplicationEvent.h"
 #include "Window.h"
 #include "LayerStack.h"
-namespace Hazel
+namespace Legacy
 {
     class Application
     {
@@ -33,4 +33,4 @@ namespace Hazel
     
    
     
-} // namespace Hazel
+} // namespace Legacy

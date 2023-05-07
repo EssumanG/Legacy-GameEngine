@@ -1,9 +1,9 @@
 #pragma once 
  
-#include "../Events/Event.h"
+#include "Event.h"
 #include <sstream>
 
- namespace Hazel {
+ namespace Legacy {
     class KeyEvent : public Event
     {
     public:

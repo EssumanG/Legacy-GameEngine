@@ -1,16 +1,16 @@
 include(CTest)
 enable_testing()
 include_directories("${CMAKE_SOURCE_DIR}/vendor/spdlog/include" 
-                    "${CMAKE_SOURCE_DIR}/src"
                     "${CMAKE_SOURCE_DIR}/vendor/GLFW/include"
                     "${CMAKE_SOURCE_DIR}/vendor/glad/include"
-                    "${CMAKE_SOURCE_DIR}/vendor/Imgui")
+                    "${CMAKE_SOURCE_DIR}/vendor/Imgui"
+                    "${CMAKE_CURRENT_SOURCE_DIR}")
 
 set(IMGUI_HEADERS "Imgui/ImGuiLayer.h" "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/imgui_opengl_renderer.h")
 set(IMGUI_SOURCES "Imgui/ImGuiLayer.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/imgui_opengl_renderer.cpp" "${CMAKE_SOURCE_DIR}/vendor/Imgui/backends/imgui_impl_glfw.cpp")
 
 list(APPEND IMGUI_FILES ${IMGUI_HEADERS} ${IMGUI_SOURCES})
-set(HEADERS "${HAZEL_SOURCE_DIR}/include/Hazel/hazel.h" 
+set(HEADERS "${HAZEL_SOURCE_DIR}/include/Legacy/legacy.h" 
             "Core.h"
             "Application.h"
             "EntryPoint.h"
@@ -38,17 +38,17 @@ endif()
 
 
 
-add_library(hazel SHARED ${HEADERS} ${SOURCES} 
+add_library(legacy SHARED ${HEADERS} ${SOURCES} 
                          ${IMGUI_FILES})
 
 # Should be defined only on Debug mode
-target_compile_definitions(hazel PUBLIC HZ_ENABLE_ASSERTS)
+target_compile_definitions(legacy PUBLIC LG_ENABLE_ASSERTS)
 add_compile_definitions("GLFW_INCLUDE_NONE")
-target_precompile_headers(hazel PUBLIC "hz_pch.h")
+target_precompile_headers(legacy PUBLIC "lg_pch.h")
 
-target_link_libraries(hazel glfw)
-target_link_libraries(hazel Glad)
-target_link_libraries(hazel imgui)
+target_link_libraries(legacy glfw)
+target_link_libraries(legacy Glad)
+target_link_libraries(legacy imgui)
 
 
 

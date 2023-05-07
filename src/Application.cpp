@@ -1,11 +1,11 @@
-#include "hz_pch.h"
+#include "lg_pch.h"
 #include "Application.h"
 #include "log.h"
 
 #include "GLFW/glfw3.h"
 #include "glad/glad.h"
 #include "Input.h"
-namespace Hazel
+namespace Legacy
 {
     
     #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
@@ -15,7 +15,7 @@ namespace Hazel
 
     Application::Application() 
     {
-        HZ_CORE_ASSERT(!s_Instance, "Application Already exists!")
+        LG_CORE_ASSERT(!s_Instance, "Application Already exists!")
         s_Instance = this;
 
         m_Window = std::unique_ptr<Window>(Window::Create());
@@ -31,7 +31,7 @@ namespace Hazel
         EventDispatcher dispatcher(e);
         dispatcher.Dispatcher<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
         
-        HZ_CORE_TRACE("{0}",e.ToString());
+        LG_CORE_TRACE("{0}",e.ToString());
         for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
         {
             (*--it)->OnEvent(e);
@@ -66,7 +66,7 @@ namespace Hazel
             }
             
             auto[x, y] = Input::GetMousePos();
-            HZ_CORE_TRACE("{0} , {1}", x, y);
+            LG_CORE_TRACE("{0} , {1}", x, y);
 
             m_Window->OnUpdate();
 
@@ -78,4 +78,4 @@ namespace Hazel
         m_Runnig = false;
         return true;
     }
-} // namespace Hazel
+} // namespace Legacy

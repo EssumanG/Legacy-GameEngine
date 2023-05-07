@@ -1,4 +1,4 @@
-#include "hz_pch.h"
+#include "lg_pch.h"
 #include "Imgui/ImGuiLayer.h"
 #include "Application.h"
 
@@ -14,7 +14,7 @@
 #include "Platform/OpenGL/imgui_opengl_renderer.h"
 #include "ImGuiLayer.h"
 
-namespace Hazel
+namespace Legacy
 {
     ImGuiLayer::ImGuiLayer()
         :Layer("ImGui Layer")
@@ -51,7 +51,7 @@ namespace Hazel
         Application &app = Application::Get();
         io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
 
-        HZ_INFO("ImGuiLayer::Update");
+        LG_INFO("ImGuiLayer::Update");
 
         float time = (float)glfwGetTime();
         io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.f);
@@ -77,14 +77,14 @@ namespace Hazel
     void ImGuiLayer::OnEvent(Event &e)
     {
         EventDispatcher dispatcher(e);
-        dispatcher.Dispatcher<MouseButtonPressedEvent>(HZ_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonPressedEvent));
-        dispatcher.Dispatcher<MouseButtonReleasedEvent>(HZ_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonReleasedEvent));
-        dispatcher.Dispatcher<MouseMovedEvent>(HZ_BIND_EVENT_FN(ImGuiLayer::OnMouseMovedEvent));
-        dispatcher.Dispatcher<MouseScrolledEvent>(HZ_BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
-        dispatcher.Dispatcher<KeyPressedEvent>(HZ_BIND_EVENT_FN(ImGuiLayer::OnKeyPressedEvent));
-        dispatcher.Dispatcher<KeyTypedEvent>(HZ_BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
-        dispatcher.Dispatcher<KeyReleasedEvent>(HZ_BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
-        dispatcher.Dispatcher<WindowResizedEvent>(HZ_BIND_EVENT_FN(ImGuiLayer::OnWindowResizedEvent));
+        dispatcher.Dispatcher<MouseButtonPressedEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonPressedEvent));
+        dispatcher.Dispatcher<MouseButtonReleasedEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonReleasedEvent));
+        dispatcher.Dispatcher<MouseMovedEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnMouseMovedEvent));
+        dispatcher.Dispatcher<MouseScrolledEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
+        dispatcher.Dispatcher<KeyPressedEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnKeyPressedEvent));
+        dispatcher.Dispatcher<KeyTypedEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
+        dispatcher.Dispatcher<KeyReleasedEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
+        dispatcher.Dispatcher<WindowResizedEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnWindowResizedEvent));
 
     }
 
