@@ -4,7 +4,7 @@
 
 #include "GLFW/glfw3.h"
 #include "glad/glad.h"
-
+#include "Input.h"
 namespace Hazel
 {
     
@@ -59,13 +59,17 @@ namespace Hazel
         while(m_Runnig)
         {
             glClearColor(0.4f, 0.5f, 0.5f, 1.0f);
-            m_Window->OnUpdate();
             for (Layer* layer : m_LayerStack)
             {
                 layer->OnUpdate();  
 
             }
-                 
+            
+            auto[x, y] = Input::GetMousePos();
+            HZ_CORE_TRACE("{0} , {1}", x, y);
+
+            m_Window->OnUpdate();
+
         }
     }
 

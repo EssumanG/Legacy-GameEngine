@@ -21,15 +21,18 @@ set(HEADERS "${HAZEL_SOURCE_DIR}/include/Hazel/hazel.h"
             "Events/ApplicationEvent.h"
             "Window.h"
             "Layer.h"
-            "LayerStack.h")
+            "LayerStack.h"
+            "Input.h")
 set(SOURCES "Application.cpp"
             "log.cpp"
             "Layer.cpp"
             "LayerStack.cpp")
 
 if (UNIX)
-    list(APPEND HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Unix/UnixWindow.h")
-    list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Unix/UnixWindow.cpp")
+    list(APPEND HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Unix/UnixWindow.h"
+                        "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Unix/UnixInput.h")
+    list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Unix/UnixWindow.cpp"
+                        "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Unix/UnixInput.cpp")
 endif()
 
 
