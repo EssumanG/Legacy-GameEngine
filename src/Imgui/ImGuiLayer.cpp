@@ -6,8 +6,8 @@
 //Temporary
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "backends/imgui_impl_glfw.h"
-#include "Platform/Unix/UnixWindow.h"
+// #include "backends/imgui_impl_glfw.h"
+// #include "Platform/Unix/UnixWindow.h"
 
 
 
@@ -35,7 +35,7 @@ namespace Legacy
         io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
         Application &app = Application::Get();
-        ImGui_ImplGlfw_InitForOpenGL(glfwGetCurrentContext(), true);
+        // ImGui_ImplGlfw_InitForOpenGL(glfwGetCurrentContext(), true);
         ImGui_ImplOpenGL3_Init("#version 330");
 
     }
@@ -56,7 +56,7 @@ namespace Legacy
         m_Time = time;
 
         ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
+        // ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
 
@@ -78,7 +78,7 @@ namespace Legacy
         dispatcher.Dispatcher<MouseButtonPressedEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonPressedEvent));
         dispatcher.Dispatcher<MouseButtonReleasedEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonReleasedEvent));
         dispatcher.Dispatcher<MouseMovedEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnMouseMovedEvent));
-        dispatcher.Dispatcher<MouseScrolledEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
+        // dispatcher.Dispatcher<MouseScrolledEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
         dispatcher.Dispatcher<KeyPressedEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnKeyPressedEvent));
         dispatcher.Dispatcher<KeyTypedEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
         dispatcher.Dispatcher<KeyReleasedEvent>(LG_BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
@@ -95,7 +95,7 @@ namespace Legacy
     bool ImGuiLayer::OnMouseButtonReleasedEvent(MouseButtonReleasedEvent &event)
     {
         ImGuiIO& io = ImGui::GetIO();
-        io.MouseReleased[event.GetMouseButton()] = false;
+        io.MouseDown[event.GetMouseButton()] = false;
         return false;
         
     }
@@ -106,14 +106,14 @@ namespace Legacy
         return false;
         
     }
-    bool ImGuiLayer::OnMouseScrolledEvent(MouseScrolledEvent& event)
-    {
-        ImGuiIO& io = ImGui::GetIO();
-        io.MouseWheel += event.GetYOffset();
-        io.MouseWheelH += event.GetXOffset();
+    // bool ImGuiLayer::OnMouseScrolledEvent(MouseScrolledEvent& event)
+    // {
+    //     ImGuiIO& io = ImGui::GetIO();
+    //     io.MouseWheel += event.GetYOffset();
+    //     io.MouseWheelH += event.GetXOffset();
 
-        return false;
-    }
+    //     return false;
+    // }
     bool ImGuiLayer::OnKeyPressedEvent(KeyPressedEvent &event)
     {
         ImGuiIO& io = ImGui::GetIO();
