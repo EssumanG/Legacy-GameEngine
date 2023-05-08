@@ -11,13 +11,16 @@ public:
 
     void OnUpdate() override
     {
-        LG_INFO("ExampleLayer::Update");
+        //LG_INFO("ExampleLayer::Update");
+
+        if(Legacy::Input::isKeyPressed(LG_KEY_TAB))
+            LG_INFO("Tab key is pressed!");
 
     }
 
     void OnEvent(Legacy::Event& event) override
     {
-        LG_TRACE("{0}", event.ToString());
+        // LG_TRACE("{0}", event.ToString());
     }
 };
 class Sandbox : public Legacy::Application
