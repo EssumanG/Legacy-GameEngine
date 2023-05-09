@@ -6,8 +6,9 @@ include_directories("${CMAKE_SOURCE_DIR}/vendor/spdlog/include"
                     "${CMAKE_SOURCE_DIR}/vendor/Imgui"
                     "${CMAKE_CURRENT_SOURCE_DIR}")
 
-set(IMGUI_HEADERS "Imgui/ImGuiLayer.h" "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/imgui_opengl_renderer.h")
-set(IMGUI_SOURCES "Imgui/ImGuiLayer.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/imgui_opengl_renderer.cpp" "${CMAKE_SOURCE_DIR}/vendor/Imgui/backends/imgui_impl_glfw.cpp")
+set(IMGUI_HEADERS "Imgui/ImGuiLayer.h" "${CMAKE_SOURCE_DIR}/vendor/Imgui/backends/imgui_impl_opengl3.h"
+                  "${CMAKE_SOURCE_DIR}/vendor/Imgui/backends/imgui_impl_glfw.h")
+set(IMGUI_SOURCES "Imgui/ImGuiLayer.cpp" "Imgui/ImGuiBuild.cpp"  )
 
 list(APPEND IMGUI_FILES ${IMGUI_HEADERS} ${IMGUI_SOURCES})
 set(HEADERS "${HAZEL_SOURCE_DIR}/include/Legacy/legacy.h" 
@@ -56,6 +57,6 @@ set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
-message("DIR  ${CMAKE_SOURCE_DIR}/src")
+# message("DIR  ${CMAKE_SOURCE_DIR}/src")
 
-message("all header files: ${HEADERS}")
+# message("all header files: ${HEADERS}")

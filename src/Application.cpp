@@ -20,6 +20,8 @@ namespace Legacy
 
         m_Window = std::unique_ptr<Window>(Window::Create());
         m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+        m_ImGuiLayer = new ImGuiLayer;
+        PushLayer(m_ImGuiLayer);
     }
     
     Application::~Application()
@@ -55,15 +57,21 @@ namespace Legacy
 
     void Application::Run()
     {
+      
         
         while(m_Runnig)
         {
-            glClearColor(0.4f, 0.5f, 0.5f, 1.0f);
+            glClearColor(0.2f, 0.5f, 0.4f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
             for (Layer* layer : m_LayerStack)
             {
                 layer->OnUpdate();  
 
             }
+            m_ImGuiLayer->Begin();
+            for (Layer* layer : m_LayerStack)
+                layer->OnImGuiRender();  
+            m_ImGuiLayer->End();;
 
             m_Window->OnUpdate();
 

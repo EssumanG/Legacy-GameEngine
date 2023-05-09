@@ -16,20 +16,11 @@ namespace Legacy
         ImGuiLayer();
         virtual ~ImGuiLayer();
 
-        void OnAttach();
-        void OnDetach();
-        void OnUpdate();
-        void OnEvent(Event& e);
-    private:
-        bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& event);
-        bool OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& event);
-        bool OnMouseScrolledEvent(MouseScrolledEvent& event);
-        bool OnMouseMovedEvent(MouseMovedEvent& event);
-
-        bool OnKeyPressedEvent(KeyPressedEvent& event);
-        bool OnKeyReleasedEvent(KeyReleasedEvent& event);
-        bool OnKeyTypedEvent(KeyTypedEvent& event);
-        bool OnWindowResizedEvent(WindowResizedEvent& event);
+        virtual void OnAttach() override;
+        virtual void OnDetach() override;
+        virtual void OnImGuiRender() override;
+        void Begin();
+        void End();
 
     private:
         float m_Time = 0.0f;

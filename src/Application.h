@@ -2,6 +2,7 @@
 // #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 #include "Window.h"
+#include "Imgui/ImGuiLayer.h"
 #include "LayerStack.h"
 namespace Legacy
 {
@@ -27,6 +28,7 @@ namespace Legacy
         std::unique_ptr<Window> m_Window;
         bool m_Runnig = true;
         LayerStack m_LayerStack;
+        ImGuiLayer* m_ImGuiLayer;
     private:
         static Application* s_Instance;
     };
