@@ -33,7 +33,7 @@ namespace Legacy
         EventDispatcher dispatcher(e);
         dispatcher.Dispatcher<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
         
-        LG_CORE_TRACE("{0}",e.ToString());
+        // LG_CORE_TRACE("{0}",e.ToString());
         for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
         {
             (*--it)->OnEvent(e);

@@ -23,6 +23,7 @@ set(HEADERS "${HAZEL_SOURCE_DIR}/include/Legacy/legacy.h"
             "Window.h"
             "Layer.h"
             "LayerStack.h"
+            "Renderer/GraphicsContext.h"
             "Input.h")
 set(SOURCES "Application.cpp"
             "log.cpp"
@@ -36,11 +37,14 @@ if (UNIX)
                         "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Unix/UnixInput.cpp")
 endif()
 
+set(OPENGL  "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLContext.h"
+            "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLContext.cpp")
+
 
 
 
 add_library(legacy SHARED ${HEADERS} ${SOURCES} 
-                         ${IMGUI_FILES})
+                         ${IMGUI_FILES} ${OPENGL})
 
 # Should be defined only on Debug mode
 target_compile_definitions(legacy PUBLIC LG_ENABLE_ASSERTS)

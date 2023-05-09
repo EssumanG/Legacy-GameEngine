@@ -1,5 +1,6 @@
 // #include "../src/Test.h"
 #include <Legacy/legacy.h>
+#include <imgui.h>
 
 class ExampleLayer : public Legacy::Layer
 {
@@ -16,6 +17,12 @@ public:
         if(Legacy::Input::isKeyPressed(LG_KEY_TAB))
             LG_INFO("Tab key is pressed!");
 
+    }
+    virtual void OnImGuiRender() override
+    {
+        ImGui::Begin("Test");
+        ImGui::Text("Hello World!");
+        ImGui::End();
     }
 
     void OnEvent(Legacy::Event& event) override

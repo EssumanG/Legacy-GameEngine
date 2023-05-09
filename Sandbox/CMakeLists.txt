@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.0.0)
 project(Sandbox VERSION 0.1.0)
 
 link_libraries(legacy)
-include_directories("${CMAKE_SOURCE_DIR}/include" "${CMAKE_SOURCE_DIR}/vendor/spdlog/include")
+include_directories("${CMAKE_SOURCE_DIR}/include" "${CMAKE_SOURCE_DIR}/vendor/spdlog/include"
+                    "${CMAKE_SOURCE_DIR}/vendor/Imgui")
 
 include(CTest)
 enable_testing()

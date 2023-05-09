@@ -1,6 +1,8 @@
 #include "lg_pch.h"
 #include "UnixWindow.h"
 
+#include "Platform/OpenGL/OpenGLContext.h"
+
 
 namespace Legacy
 {
@@ -29,7 +31,8 @@ namespace Legacy
     void UnixWindow::OnUpdate()
     {
         glfwPollEvents();
-        glfwSwapBuffers(m_Window);
+        m_Context->SwapBuffers();
+
     }
 
     void UnixWindow::SetVSync(bool enabled)
@@ -59,6 +62,8 @@ namespace Legacy
 
         LG_CORE_INFO("Creating Window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
+        
+
         if(!s_GLFWInitialized)
         {
             int success = glfwInit();
@@ -68,10 +73,10 @@ namespace Legacy
         }
 
         m_Window = glfwCreateWindow((int)m_Data.Width, (int)m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
-        glfwMakeContextCurrent(m_Window);
+        m_Context = new OpenGLContext(m_Window);
+        m_Context->Init();
 
-        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        LG_CORE_ASSERT(status, "Failed to initialize Glad")
+        
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
 

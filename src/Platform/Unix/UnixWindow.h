@@ -1,12 +1,13 @@
 #pragma once
 
 #include "Window.h"
-#include "glad/glad.h"
+
 #include "GLFW/glfw3.h"
 
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"
 #include "Events/KeyEvent.h"
+#include "Renderer/GraphicsContext.h"
 
 namespace Legacy
 {
@@ -33,7 +34,7 @@ namespace Legacy
 
     private:
         GLFWwindow *m_Window;
-
+        GraphicsContext* m_Context;
         struct WindowData
         {
             std::string Title;
@@ -45,6 +46,7 @@ namespace Legacy
         };
 
         WindowData m_Data;
+
     };
 
 } // namespace Hazel
