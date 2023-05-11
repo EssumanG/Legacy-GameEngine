@@ -10,7 +10,25 @@ namespace Legacy
     
     #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
+    static GLenum ShaderDataTypeToOpenGLDataType(ShaderDataType type)
+    {
+        switch(type)
+        {
+            case ShaderDataType::Float:    return GL_FLOAT;
+            case ShaderDataType::Float2:   return GL_FLOAT;
+            case ShaderDataType::Float3:   return GL_FLOAT;
+            case ShaderDataType::Float4:   return GL_FLOAT;
+            case ShaderDataType::Int:      return GL_INT;
+            case ShaderDataType::Int2:     return GL_INT;
+            case ShaderDataType::Int3:     return GL_INT;
+            case ShaderDataType::Int4:     return GL_INT;
+            case ShaderDataType::Mat3:     return GL_FLOAT;
+            case ShaderDataType::Mat4:     return GL_FLOAT;
+        }
 
+        LG_CORE_ASSERT(false, "Unknown ShaderDataType");
+        return 0;
+    }
     Application* Application::s_Instance = nullptr;
 
     Application::Application() 
@@ -28,15 +46,34 @@ namespace Legacy
 
 
         float vertices[]={
-            -0.5f, -0.5f, 0.0f,
-             0.5f, -0.5f, 0.0f,
-             0.0f,  0.5f, 0.0f,
+            -0.5f, -0.5f, 0.0f, 0.4f, 0.3f, 0.5f, 1.0,
+             0.5f, -0.5f, 0.0f, 0.5f, 0.4f, 0.3f, 1.0,
+             0.0f,  0.5f, 0.0f, 0.3f, 0.5f, 0.4f, 1.0,
         };
 
         m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), nullptr);
-        glEnableVertexAttribArray(0);
+        BufferLayout layout =
+        {
+            {ShaderDataType::Float3, "a_Position"},
+            {ShaderDataType::Float4, "a_Color"},
+        };
+
+        m_VertexBuffer->SetLayout(layout);
+
+        uint32_t index = 0;
+        for (auto& element: m_VertexBuffer->GetLayout() )
+        {
+            glEnableVertexAttribArray(index);
+            glVertexAttribPointer(index, 
+                element.GetComponentCount(), 
+                ShaderDataTypeToOpenGLDataType(element.Type), 
+                element.Normalized ? GL_TRUE : GL_FALSE, 
+                m_VertexBuffer->GetLayout().GetStride(), 
+                (const void *)element.Offset);
+            index++;
+        }
+
 
         
 
@@ -47,20 +84,25 @@ namespace Legacy
             #version 330 core
 
             layout (location = 0) in vec3 a_Position;
+            layout (location = 1) in vec4 a_Color;
+
+            out vec4 v_Color;
             void main()
             {
                 gl_Position = vec4(a_Position, 1.0f);
+                v_Color = a_Color;
             }
 
         )";
 
         std::string fragmentSrc = R"(
             #version 330 core
-
+            in vec4 v_Color;
             out vec4 color;
             void main()
             {
-                color = vec4(0.3f, 0.2f, 0.8f, 1.0f);
+                // color = vec4(0.3f, 0.2f, 0.8f, 1.0f);
+                color = v_Color;
             }
 
         )";

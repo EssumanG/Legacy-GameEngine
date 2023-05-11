@@ -1,5 +1,4 @@
-#include "lg_pch.h"
-#include "Core.h"
+
 #include "Buffer.h"
 #include "Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLBuffer.h"
