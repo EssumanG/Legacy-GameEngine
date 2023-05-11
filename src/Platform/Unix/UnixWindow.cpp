@@ -61,7 +61,8 @@ namespace Legacy
         m_Data.Height = props.Height;
 
         LG_CORE_INFO("Creating Window {0} ({1}, {2})", props.Title, props.Width, props.Height);
-
+        // LG_CORE_INFO("{}",glfwGetVersionString());/
+        
         
 
         if(!s_GLFWInitialized)

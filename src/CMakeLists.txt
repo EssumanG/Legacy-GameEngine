@@ -24,11 +24,17 @@ set(HEADERS "${HAZEL_SOURCE_DIR}/include/Legacy/legacy.h"
             "Layer.h"
             "LayerStack.h"
             "Renderer/GraphicsContext.h"
-            "Input.h")
+            "Renderer/Shader.h"
+            "Input.h"
+            "Renderer/Buffer.h"
+            "Renderer/Renderer.h")
 set(SOURCES "Application.cpp"
             "log.cpp"
             "Layer.cpp"
-            "LayerStack.cpp")
+            "LayerStack.cpp"
+            "Renderer/Buffer.cpp"
+            "Renderer/Shader.cpp"
+            "Renderer/Renderer.cpp")
 
 if (UNIX)
     list(APPEND HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Unix/UnixWindow.h"
@@ -38,7 +44,9 @@ if (UNIX)
 endif()
 
 set(OPENGL  "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLContext.h"
-            "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLContext.cpp")
+            "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLContext.cpp"
+            "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLBuffer.h"
+            "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLBuffer.cpp")
 
 
 
