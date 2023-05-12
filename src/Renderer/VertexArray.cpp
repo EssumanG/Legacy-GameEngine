@@ -10,8 +10,8 @@ namespace Legacy
     {
         switch (Renderer::GetAPI())
         {
-            case RendererAPI::None: LG_CORE_ASSERT(false, "RendererAPI::None is currently not supported"); return nullptr;
-            case RendererAPI::OpenGL: return new OpenGLVertexArray();
+            case RendererAPI::API::None: LG_CORE_ASSERT(false, "RendererAPI::None is currently not supported"); return nullptr;
+            case RendererAPI::API::OpenGL: return new OpenGLVertexArray();
         }
         LG_CORE_ASSERT(false, "Unknown RendererAPI!");
         return nullptr;

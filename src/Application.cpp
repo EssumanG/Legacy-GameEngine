@@ -5,6 +5,8 @@
 #include "GLFW/glfw3.h"
 #include "glad/glad.h"
 #include "Input.h"
+
+#include "Renderer/Renderer.h"
 namespace Legacy
 {
     
@@ -26,9 +28,9 @@ namespace Legacy
         m_VertexArray.reset(VertexArray::Create());
 
         float vertices[]={
-            -0.5f, -0.5f, 0.0f, 0.4f, 0.3f, 0.5f, 1.0,
-             0.5f, -0.5f, 0.0f, 0.5f, 0.4f, 0.3f, 1.0,
-             0.0f,  0.5f, 0.0f, 0.3f, 0.5f, 0.4f, 1.0,
+            -0.5f, -0.5f, 0.0f, 0.8f, 0.3f, 0.2f, 1.0,
+             0.5f, -0.5f, 0.0f, 0.3f, 0.4f, 0.8f, 1.0,
+             0.0f,  0.5f, 0.0f, 0.4f, 0.6f, 0.7f, 1.0,
         };
 
 
@@ -85,10 +87,10 @@ namespace Legacy
 
         m_RectVertexArray.reset(VertexArray::Create());
         float Rectvertices[]={
-            -0.5f, -0.5f, 0.0f,
-             0.5f, -0.5f, 0.0f,
-             0.5f,  0.5f, 0.0f,
-            -0.5f,  0.5f, 0.0f,
+            -0.75f, -0.75f, 0.0f,
+             0.75f, -0.75f, 0.0f,
+             0.75f,  0.75f, 0.0f,
+            -0.75f,  0.75f, 0.0f,
         };
 
 
@@ -121,7 +123,7 @@ namespace Legacy
             out vec4 color;
             void main()
             {
-                color = vec4(0.3f, 0.2f, 0.8f, 1.0f);
+                color = vec4(0.2f, 0.5f, 0.5f, 1.0f);
 
             }
 
@@ -167,16 +169,19 @@ namespace Legacy
         
         while(m_Runnig)
         {
-            glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
+            RenderCommand::SetClearColor({0.2f, 0.2f, 0.2f, 1.0f});
+            RenderCommand::Clear();
+
+            Renderer::BeginScene();
 
             m_RectShader->Bind();
-            m_RectVertexArray->Bind();
-            glDrawElements(GL_TRIANGLES, m_RectVertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+            Renderer::Submit(m_RectVertexArray);
 
             m_Shader->Bind();
-            m_VertexArray->Bind();
-            glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+            Renderer::Submit(m_VertexArray);
+
+            Renderer::EndScene();
+
 
             for (Layer* layer : m_LayerStack)
             {

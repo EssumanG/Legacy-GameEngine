@@ -9,8 +9,8 @@ namespace Legacy
     {
         switch (Renderer::GetAPI())
         {
-            case RendererAPI::None: LG_CORE_ASSERT(false, "RendererAPI::None is not supported"); return nullptr;
-            case RendererAPI::OpenGL: return new OpenGLVertexBuffer(vertices, size);
+            case RendererAPI::API::None: LG_CORE_ASSERT(false, "RendererAPI::None is not supported"); return nullptr;
+            case RendererAPI::API::OpenGL: return new OpenGLVertexBuffer(vertices, size);
         }
         LG_CORE_ASSERT(false, "Unknown RendererAPI!");
         return nullptr;
@@ -21,8 +21,8 @@ namespace Legacy
     {
         switch (Renderer::GetAPI())
         {
-            case RendererAPI::None: LG_CORE_ASSERT(false, "RendererAPI::None is not supported"); return nullptr;
-            case RendererAPI::OpenGL: return new OpenGLIndexBuffer(indices, count);
+            case RendererAPI::API::None: LG_CORE_ASSERT(false, "RendererAPI::None is not supported"); return nullptr;
+            case RendererAPI::API::OpenGL: return new OpenGLIndexBuffer(indices, count);
         }
         LG_CORE_ASSERT(false, "Unknown RendererAPI!");
         return nullptr;

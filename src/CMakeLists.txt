@@ -28,6 +28,8 @@ set(HEADERS "${HAZEL_SOURCE_DIR}/include/Legacy/legacy.h"
             "Input.h"
             "Renderer/Buffer.h"
             "Renderer/Renderer.h"
+            "Renderer/RendererAPI.h"
+            "Renderer/RenderCommand.h"
             "Renderer/VertexArray.h"
             )
 set(SOURCES "Application.cpp"
@@ -37,6 +39,8 @@ set(SOURCES "Application.cpp"
             "Renderer/Buffer.cpp"
             "Renderer/Shader.cpp"
             "Renderer/Renderer.cpp"
+            "Renderer/RendererAPI.cpp"
+            "Renderer/RenderCommand.cpp"
             "Renderer/VertexArray.cpp")
 
 if (UNIX)
@@ -51,7 +55,9 @@ set(OPENGL  "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLContext.h"
             "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLBuffer.h"
             "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLBuffer.cpp"
             "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLVertexArray.h"
-            "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLVertexArray.cpp")
+            "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLVertexArray.cpp"
+            "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLRendererAPI.h"
+            "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLRendererAPI.cpp")
 
 
 
