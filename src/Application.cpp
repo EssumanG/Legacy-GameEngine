@@ -10,25 +10,7 @@ namespace Legacy
     
     #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
-    static GLenum ShaderDataTypeToOpenGLDataType(ShaderDataType type)
-    {
-        switch(type)
-        {
-            case ShaderDataType::Float:    return GL_FLOAT;
-            case ShaderDataType::Float2:   return GL_FLOAT;
-            case ShaderDataType::Float3:   return GL_FLOAT;
-            case ShaderDataType::Float4:   return GL_FLOAT;
-            case ShaderDataType::Int:      return GL_INT;
-            case ShaderDataType::Int2:     return GL_INT;
-            case ShaderDataType::Int3:     return GL_INT;
-            case ShaderDataType::Int4:     return GL_INT;
-            case ShaderDataType::Mat3:     return GL_FLOAT;
-            case ShaderDataType::Mat4:     return GL_FLOAT;
-        }
-
-        LG_CORE_ASSERT(false, "Unknown ShaderDataType");
-        return 0;
-    }
+   
     Application* Application::s_Instance = nullptr;
 
     Application::Application() 
@@ -41,9 +23,7 @@ namespace Legacy
         m_ImGuiLayer = new ImGuiLayer;
         PushLayer(m_ImGuiLayer);
 
-        glGenVertexArrays(1, &m_VertexArray);
-        glBindVertexArray(m_VertexArray);
-
+        m_VertexArray.reset(VertexArray::Create());
 
         float vertices[]={
             -0.5f, -0.5f, 0.0f, 0.4f, 0.3f, 0.5f, 1.0,
@@ -51,34 +31,26 @@ namespace Legacy
              0.0f,  0.5f, 0.0f, 0.3f, 0.5f, 0.4f, 1.0,
         };
 
-        m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 
+        std::shared_ptr<VertexBuffer> m_VertexBuffer;
+        m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
         BufferLayout layout =
         {
             {ShaderDataType::Float3, "a_Position"},
             {ShaderDataType::Float4, "a_Color"},
         };
-
-        m_VertexBuffer->SetLayout(layout);
-
-        uint32_t index = 0;
-        for (auto& element: m_VertexBuffer->GetLayout() )
-        {
-            glEnableVertexAttribArray(index);
-            glVertexAttribPointer(index, 
-                element.GetComponentCount(), 
-                ShaderDataTypeToOpenGLDataType(element.Type), 
-                element.Normalized ? GL_TRUE : GL_FALSE, 
-                m_VertexBuffer->GetLayout().GetStride(), 
-                (const void *)element.Offset);
-            index++;
-        }
-
-
         
+        m_VertexBuffer->SetLayout(layout); 
+        m_VertexArray->AddVertexBuffer(m_VertexBuffer);        
 
         uint32_t indices[]= {0, 1, 2};
+        std::shared_ptr<IndexBuffer> m_IndexBuffer; 
         m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices)/sizeof(uint32_t)));
+        m_VertexArray->SetIndexBuffer(m_IndexBuffer);
+
+
+
+
 
         std::string vertexSrc = R"(
             #version 330 core
@@ -108,6 +80,54 @@ namespace Legacy
         )";
 
         m_Shader.reset(new Shader(vertexSrc, fragmentSrc));
+        
+
+
+        m_RectVertexArray.reset(VertexArray::Create());
+        float Rectvertices[]={
+            -0.5f, -0.5f, 0.0f,
+             0.5f, -0.5f, 0.0f,
+             0.5f,  0.5f, 0.0f,
+            -0.5f,  0.5f, 0.0f,
+        };
+
+
+        std::shared_ptr<VertexBuffer> m_RectVertexBuffer;
+        m_RectVertexBuffer.reset(VertexBuffer::Create(Rectvertices, sizeof(Rectvertices)));
+        m_RectVertexBuffer->SetLayout({
+            {ShaderDataType::Float3, "a_Position"}
+        });
+
+        m_RectVertexArray->AddVertexBuffer(m_RectVertexBuffer);         
+        uint32_t RectIndices[]= {0, 1, 2, 0, 2, 3};
+        std::shared_ptr<IndexBuffer> m_RectIndexBuffer; 
+        m_RectIndexBuffer.reset(IndexBuffer::Create(RectIndices, sizeof(RectIndices)/sizeof(uint32_t)));
+        m_RectVertexArray->SetIndexBuffer(m_RectIndexBuffer);
+
+
+        std::string RectvertexSrc = R"(
+            #version 330 core
+
+            layout (location = 0) in vec3 a_Position;
+            void main()
+            {
+                gl_Position = vec4(a_Position, 1.0f);
+            }
+
+        )";
+
+        std::string RectfragmentSrc = R"(
+            #version 330 core
+            out vec4 color;
+            void main()
+            {
+                color = vec4(0.3f, 0.2f, 0.8f, 1.0f);
+
+            }
+
+        )";
+
+        m_RectShader.reset(new Shader(RectvertexSrc, RectfragmentSrc));
     }
     
     Application::~Application()
@@ -150,9 +170,13 @@ namespace Legacy
             glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
+            m_RectShader->Bind();
+            m_RectVertexArray->Bind();
+            glDrawElements(GL_TRIANGLES, m_RectVertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+
             m_Shader->Bind();
-            glBindVertexArray(m_VertexArray);
-            glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+            m_VertexArray->Bind();
+            glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
             for (Layer* layer : m_LayerStack)
             {
