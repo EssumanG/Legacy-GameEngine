@@ -29,6 +29,7 @@ set(HEADERS "${HAZEL_SOURCE_DIR}/include/Legacy/legacy.h"
             "Renderer/Buffer.h"
             "Renderer/Renderer.h"
             "Renderer/RendererAPI.h"
+            "Renderer/OrthographicCamera.h"
             "Renderer/RenderCommand.h"
             "Renderer/VertexArray.h"
             )
@@ -40,6 +41,7 @@ set(SOURCES "Application.cpp"
             "Renderer/Shader.cpp"
             "Renderer/Renderer.cpp"
             "Renderer/RendererAPI.cpp"
+            "Renderer/OrthographicCamera.cpp"
             "Renderer/RenderCommand.cpp"
             "Renderer/VertexArray.cpp")
 

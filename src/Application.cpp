@@ -16,6 +16,7 @@ namespace Legacy
     Application* Application::s_Instance = nullptr;
 
     Application::Application() 
+        :m_Camera(-1.6f, 1.6f, -1.0f, 1.0f)
     {
         LG_CORE_ASSERT(!s_Instance, "Application Already exists!")
         s_Instance = this;
@@ -60,10 +61,11 @@ namespace Legacy
             layout (location = 0) in vec3 a_Position;
             layout (location = 1) in vec4 a_Color;
 
+            uniform mat4 u_ViewProjectionMatrix;
             out vec4 v_Color;
             void main()
             {
-                gl_Position = vec4(a_Position, 1.0f);
+                gl_Position = u_ViewProjectionMatrix * vec4(a_Position, 1.0f);
                 v_Color = a_Color;
             }
 
@@ -111,9 +113,11 @@ namespace Legacy
             #version 330 core
 
             layout (location = 0) in vec3 a_Position;
+
+            uniform mat4 u_ViewProjectionMatrix;
             void main()
             {
-                gl_Position = vec4(a_Position, 1.0f);
+                gl_Position = u_ViewProjectionMatrix *vec4(a_Position, 1.0f);
             }
 
         )";
@@ -171,14 +175,14 @@ namespace Legacy
         {
             RenderCommand::SetClearColor({0.2f, 0.2f, 0.2f, 1.0f});
             RenderCommand::Clear();
+            m_Camera.SetRotation(45.0f);
+            // m_Camera.SetPosition({0.5f, 0.5f, 0.0f});
 
-            Renderer::BeginScene();
+            Renderer::BeginScene(m_Camera);
 
-            m_RectShader->Bind();
-            Renderer::Submit(m_RectVertexArray);
+            Renderer::Submit(m_RectShader, m_RectVertexArray);
 
-            m_Shader->Bind();
-            Renderer::Submit(m_VertexArray);
+            Renderer::Submit(m_Shader, m_VertexArray);
 
             Renderer::EndScene();
 
