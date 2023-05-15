@@ -4,6 +4,8 @@
 #include "Core.h"
 #include "Events/Event.h"
 
+#include "Core/Timestep.h"
+
 
 namespace Legacy
 {
@@ -15,7 +17,7 @@ namespace Legacy
 
         virtual void OnAttach() {}
         virtual void OnDetach() {}
-        virtual void OnUpdate() {}
+        virtual void OnUpdate(Timestep ts) {}
         virtual void OnEvent(Event& e) {};
         virtual void OnImGuiRender(){};
 

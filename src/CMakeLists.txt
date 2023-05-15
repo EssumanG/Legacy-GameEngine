@@ -32,6 +32,7 @@ set(HEADERS "${HAZEL_SOURCE_DIR}/include/Legacy/legacy.h"
             "Renderer/OrthographicCamera.h"
             "Renderer/RenderCommand.h"
             "Renderer/VertexArray.h"
+            "Core/Timestep.h"
             )
 set(SOURCES "Application.cpp"
             "log.cpp"

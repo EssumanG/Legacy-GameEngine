@@ -33,12 +33,7 @@ namespace Legacy
         bool m_Runnig = true;
         LayerStack m_LayerStack;
         ImGuiLayer* m_ImGuiLayer;
-        std::shared_ptr<Shader> m_Shader;
-        std::shared_ptr<VertexArray> m_VertexArray;
-
-        std::shared_ptr<Shader> m_RectShader;
-        std::shared_ptr<VertexArray> m_RectVertexArray;
-        OrthographicCamera m_Camera;
+        float m_LastFrameTime = 0.0;
         
     private:
         static Application* s_Instance;
