@@ -60,7 +60,9 @@ set(OPENGL  "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLContext.h"
             "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLVertexArray.h"
             "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLVertexArray.cpp"
             "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLRendererAPI.h"
-            "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLRendererAPI.cpp")
+            "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLRendererAPI.cpp"
+            "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLShader.h"
+            "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLShader.cpp")
 
 
 
