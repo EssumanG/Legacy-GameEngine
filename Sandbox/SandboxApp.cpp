@@ -168,6 +168,7 @@ public:
         m_TextureShader.reset(Legacy::Shader::Create(TextureVertexSrc, TexturueFragmentSrc));
 
         m_Texture = Legacy::Texture2D::Create("/home/essuman/projects/C_or_C++_projects/Game Engine/Leagacy/Sandbox/assets/textures/texture.jpg");
+        m_DinnerTextuer = Legacy::Texture2D::Create("/home/essuman/projects/C_or_C++_projects/Game Engine/Leagacy/Sandbox/assets/textures/ChernoLogo.png");
 
         std::dynamic_pointer_cast<Legacy::OpenGLShader>(m_TextureShader)->Bind();
         std::dynamic_pointer_cast<Legacy::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
@@ -218,9 +219,10 @@ public:
             }
         }
 
-        m_Texture->Bind();
-        
+        m_Texture->Bind();  
         Legacy::Renderer::Submit(m_TextureShader, m_RectVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5)));
+        m_DinnerTextuer->Bind();  
+        Legacy::Renderer::Submit(m_TextureShader, m_RectVertexArray,  glm::scale(glm::mat4(1.0f), glm::vec3(1.5)));
 
 
         // Legacy::Renderer::Submit(m_Shader, m_VertexArray);
@@ -246,7 +248,9 @@ private:
         std::shared_ptr<Legacy::Shader> m_RectShader;
         std::shared_ptr<Legacy::Shader> m_TextureShader;
         std::shared_ptr<Legacy::VertexArray> m_RectVertexArray;
+
         std::shared_ptr<Legacy::Texture2D> m_Texture;
+        std::shared_ptr<Legacy::Texture2D> m_DinnerTextuer;
         Legacy::OrthographicCamera m_Camera;
         glm::vec3 m_CameraPosition;
         float m_CameraMoveSpeed = 1.0;
