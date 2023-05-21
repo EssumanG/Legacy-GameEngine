@@ -78,17 +78,18 @@ public:
 
         m_RectVertexArray.reset(Legacy::VertexArray::Create());
         float Rectvertices[]={
-            -0.75f, -0.75f, 0.0f,
-             0.75f, -0.75f, 0.0f,
-             0.75f,  0.75f, 0.0f,
-            -0.75f,  0.75f, 0.0f,
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+             0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+             0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+            -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
         };
 
 
         std::shared_ptr<Legacy::VertexBuffer> m_RectVertexBuffer;
         m_RectVertexBuffer.reset(Legacy::VertexBuffer::Create(Rectvertices, sizeof(Rectvertices)));
         m_RectVertexBuffer->SetLayout({
-            {Legacy::ShaderDataType::Float3, "a_Position"}
+            {Legacy::ShaderDataType::Float3, "a_Position"},
+            {Legacy::ShaderDataType::Float2, "a_TexCoord"}
         });
 
         m_RectVertexArray->AddVertexBuffer(m_RectVertexBuffer);         
@@ -126,6 +127,52 @@ public:
 
        
         m_RectShader.reset(Legacy::Shader::Create(RectvertexSrc, RectfragmentSrc));
+
+
+        std::string TextureVertexSrc = R"(
+            #version 330 core
+
+            layout (location = 0) in vec3 a_Position;
+            layout (location = 1) in vec2 a_TexCoord;
+
+            uniform mat4 u_ViewProjectionMatrix;
+            uniform mat4 u_Transform;
+
+            out vec2 v_TexCoord;
+            void main()
+            {
+                v_TexCoord = a_TexCoord;
+                gl_Position = u_ViewProjectionMatrix * u_Transform * vec4(a_Position, 1.0f);
+            }
+
+        )";
+
+        std::string TexturueFragmentSrc = R"(
+            #version 330 core
+            out vec4 color;
+            in vec2 v_TexCoord;
+           
+           
+            uniform sampler2D u_Texture;
+
+            void main()
+            {
+                // color = vec4(v_TexCoord, 0.0f, 1.0f);
+                color = texture(u_Texture, v_TexCoord);
+
+            }
+
+        )";
+
+       
+        m_TextureShader.reset(Legacy::Shader::Create(TextureVertexSrc, TexturueFragmentSrc));
+
+        m_Texture = Legacy::Texture2D::Create("/home/essuman/projects/C_or_C++_projects/Game Engine/Leagacy/Sandbox/assets/textures/texture.jpg");
+
+        std::dynamic_pointer_cast<Legacy::OpenGLShader>(m_TextureShader)->Bind();
+        std::dynamic_pointer_cast<Legacy::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+
+
     }
 
     void OnUpdate(Legacy::Timestep ts) override
@@ -165,15 +212,18 @@ public:
         {
             for (int j = 0; j < 15; j++)
             {
-                glm::vec3 pos(i * 0.17f, j * 0.17f, 0.0f);
+                glm::vec3 pos(i * 0.12f, j * 0.12f, 0.0f);
                 glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
                 Legacy::Renderer::Submit(m_RectShader, m_RectVertexArray, transform);
             }
         }
 
+        m_Texture->Bind();
+        
+        Legacy::Renderer::Submit(m_TextureShader, m_RectVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5)));
 
 
-        Legacy::Renderer::Submit(m_Shader, m_VertexArray);
+        // Legacy::Renderer::Submit(m_Shader, m_VertexArray);
 
         Legacy::Renderer::EndScene();
 
@@ -194,7 +244,9 @@ private:
         std::shared_ptr<Legacy::VertexArray> m_VertexArray;
 
         std::shared_ptr<Legacy::Shader> m_RectShader;
+        std::shared_ptr<Legacy::Shader> m_TextureShader;
         std::shared_ptr<Legacy::VertexArray> m_RectVertexArray;
+        std::shared_ptr<Legacy::Texture2D> m_Texture;
         Legacy::OrthographicCamera m_Camera;
         glm::vec3 m_CameraPosition;
         float m_CameraMoveSpeed = 1.0;
@@ -202,7 +254,7 @@ private:
         float m_CameraRotation = 0.0f;
         float m_CameraRatationSpeed = 100;
 
-        glm::vec3 m_SquareColor = { 0.5f, 0.6f, 0.9f };
+        glm::vec3 m_SquareColor = { 0.3f, 0.4f, 0.9f };
 
 };
 class Sandbox : public Legacy::Application

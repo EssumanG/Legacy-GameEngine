@@ -15,6 +15,7 @@
 #include "../../src/Renderer/Renderer.h"
 #include "../../src/Renderer/RenderCommand.h"
 #include "../../src/Renderer/Shader.h"
+#include "../../src/Renderer/Texture.h"
 #include "../../src/Renderer/VertexArray.h"
 #include "../../src/Renderer/OrthographicCamera.h"
 
