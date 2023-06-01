@@ -128,44 +128,8 @@ public:
        
         m_RectShader.reset(Legacy::Shader::Create(RectvertexSrc, RectfragmentSrc));
 
-
-        std::string TextureVertexSrc = R"(
-            #version 330 core
-
-            layout (location = 0) in vec3 a_Position;
-            layout (location = 1) in vec2 a_TexCoord;
-
-            uniform mat4 u_ViewProjectionMatrix;
-            uniform mat4 u_Transform;
-
-            out vec2 v_TexCoord;
-            void main()
-            {
-                v_TexCoord = a_TexCoord;
-                gl_Position = u_ViewProjectionMatrix * u_Transform * vec4(a_Position, 1.0f);
-            }
-
-        )";
-
-        std::string TexturueFragmentSrc = R"(
-            #version 330 core
-            out vec4 color;
-            in vec2 v_TexCoord;
-           
-           
-            uniform sampler2D u_Texture;
-
-            void main()
-            {
-                // color = vec4(v_TexCoord, 0.0f, 1.0f);
-                color = texture(u_Texture, v_TexCoord);
-
-            }
-
-        )";
-
        
-        m_TextureShader.reset(Legacy::Shader::Create(TextureVertexSrc, TexturueFragmentSrc));
+        m_TextureShader.reset(Legacy::Shader::Create("/home/essuman/projects/C_or_C++_projects/Game Engine/Leagacy/Sandbox/assets/shaders/Texture.glsl"));
 
         m_Texture = Legacy::Texture2D::Create("/home/essuman/projects/C_or_C++_projects/Game Engine/Leagacy/Sandbox/assets/textures/texture.jpg");
         m_DinnerTextuer = Legacy::Texture2D::Create("/home/essuman/projects/C_or_C++_projects/Game Engine/Leagacy/Sandbox/assets/textures/ChernoLogo.png");
