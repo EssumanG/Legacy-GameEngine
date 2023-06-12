@@ -9,4 +9,6 @@
 #include <string>
 #include <sstream>
 #include "log.h"
+
+#include "Core.h"
  

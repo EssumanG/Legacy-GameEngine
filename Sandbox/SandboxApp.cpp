@@ -22,7 +22,7 @@ public:
         };
 
 
-        std::shared_ptr<Legacy::VertexBuffer> m_VertexBuffer;
+        Legacy::Ref<Legacy::VertexBuffer> m_VertexBuffer;
         m_VertexBuffer.reset(Legacy::VertexBuffer::Create(vertices, sizeof(vertices)));
         Legacy::BufferLayout layout =
         {
@@ -34,7 +34,7 @@ public:
         m_VertexArray->AddVertexBuffer(m_VertexBuffer);        
 
         uint32_t indices[]= {0, 1, 2};
-        std::shared_ptr<Legacy::IndexBuffer> m_IndexBuffer; 
+        Legacy::Ref<Legacy::IndexBuffer> m_IndexBuffer; 
         m_IndexBuffer.reset(Legacy::IndexBuffer::Create(indices, sizeof(indices)/sizeof(uint32_t)));
         m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
@@ -85,7 +85,7 @@ public:
         };
 
 
-        std::shared_ptr<Legacy::VertexBuffer> m_RectVertexBuffer;
+        Legacy::Ref<Legacy::VertexBuffer> m_RectVertexBuffer;
         m_RectVertexBuffer.reset(Legacy::VertexBuffer::Create(Rectvertices, sizeof(Rectvertices)));
         m_RectVertexBuffer->SetLayout({
             {Legacy::ShaderDataType::Float3, "a_Position"},
@@ -94,7 +94,7 @@ public:
 
         m_RectVertexArray->AddVertexBuffer(m_RectVertexBuffer);         
         uint32_t RectIndices[]= {0, 1, 2, 0, 2, 3};
-        std::shared_ptr<Legacy::IndexBuffer> m_RectIndexBuffer; 
+        Legacy::Ref<Legacy::IndexBuffer> m_RectIndexBuffer; 
         m_RectIndexBuffer.reset(Legacy::IndexBuffer::Create(RectIndices, sizeof(RectIndices)/sizeof(uint32_t)));
         m_RectVertexArray->SetIndexBuffer(m_RectIndexBuffer);
 
@@ -206,15 +206,15 @@ public:
     }
 
 private:
-        std::shared_ptr<Legacy::Shader> m_Shader;
-        std::shared_ptr<Legacy::VertexArray> m_VertexArray;
+        Legacy::Ref<Legacy::Shader> m_Shader;
+        Legacy::Ref<Legacy::VertexArray> m_VertexArray;
 
-        std::shared_ptr<Legacy::Shader> m_RectShader;
-        std::shared_ptr<Legacy::Shader> m_TextureShader;
-        std::shared_ptr<Legacy::VertexArray> m_RectVertexArray;
+        Legacy::Ref<Legacy::Shader> m_RectShader;
+        Legacy::Ref<Legacy::Shader> m_TextureShader;
+        Legacy::Ref<Legacy::VertexArray> m_RectVertexArray;
 
-        std::shared_ptr<Legacy::Texture2D> m_Texture;
-        std::shared_ptr<Legacy::Texture2D> m_DinnerTextuer;
+        Legacy::Ref<Legacy::Texture2D> m_Texture;
+        Legacy::Ref<Legacy::Texture2D> m_DinnerTextuer;
         Legacy::OrthographicCamera m_Camera;
         glm::vec3 m_CameraPosition;
         float m_CameraMoveSpeed = 1.0;
