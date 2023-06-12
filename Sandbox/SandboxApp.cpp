@@ -71,7 +71,7 @@ public:
 
         )";
 
-        m_Shader.reset(Legacy::Shader::Create(vertexSrc, fragmentSrc));
+        m_Shader = Legacy::Shader::Create("VertexPosColor", vertexSrc, fragmentSrc);
         // std::dynamic_pointer_cast<OpenGLShader>(m_Shader)->
         
 
@@ -126,16 +126,16 @@ public:
         )";
 
        
-        m_RectShader.reset(Legacy::Shader::Create(RectvertexSrc, RectfragmentSrc));
+        m_RectShader = Legacy::Shader::Create("RectColor", RectvertexSrc, RectfragmentSrc);
 
        
-        m_TextureShader.reset(Legacy::Shader::Create("/home/essuman/projects/C_or_C++_projects/Game Engine/Leagacy/Sandbox/assets/shaders/Texture.glsl"));
+        auto textureShader = m_ShaderLibrary.Load("/home/essuman/projects/C_or_C++_projects/Game Engine/Leagacy/Sandbox/assets/shaders/Texture.glsl");
 
         m_Texture = Legacy::Texture2D::Create("/home/essuman/projects/C_or_C++_projects/Game Engine/Leagacy/Sandbox/assets/textures/texture.jpg");
         m_DinnerTextuer = Legacy::Texture2D::Create("/home/essuman/projects/C_or_C++_projects/Game Engine/Leagacy/Sandbox/assets/textures/ChernoLogo.png");
 
-        std::dynamic_pointer_cast<Legacy::OpenGLShader>(m_TextureShader)->Bind();
-        std::dynamic_pointer_cast<Legacy::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+        std::dynamic_pointer_cast<Legacy::OpenGLShader>(textureShader)->Bind();
+        std::dynamic_pointer_cast<Legacy::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 
 
     }
@@ -183,10 +183,12 @@ public:
             }
         }
 
+        auto textureShader = m_ShaderLibrary.Get("Texture");
+
         m_Texture->Bind();  
-        Legacy::Renderer::Submit(m_TextureShader, m_RectVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5)));
+        Legacy::Renderer::Submit(textureShader, m_RectVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5)));
         m_DinnerTextuer->Bind();  
-        Legacy::Renderer::Submit(m_TextureShader, m_RectVertexArray,  glm::scale(glm::mat4(1.0f), glm::vec3(1.5)));
+        Legacy::Renderer::Submit(textureShader, m_RectVertexArray,  glm::scale(glm::mat4(1.0f), glm::vec3(1.5)));
 
 
         // Legacy::Renderer::Submit(m_Shader, m_VertexArray);
@@ -207,10 +209,11 @@ public:
 
 private:
         Legacy::Ref<Legacy::Shader> m_Shader;
+        Legacy::ShaderLibrary m_ShaderLibrary;
         Legacy::Ref<Legacy::VertexArray> m_VertexArray;
 
         Legacy::Ref<Legacy::Shader> m_RectShader;
-        Legacy::Ref<Legacy::Shader> m_TextureShader;
+        // Legacy::Ref<Legacy::Shader> m_TextureShader;
         Legacy::Ref<Legacy::VertexArray> m_RectVertexArray;
 
         Legacy::Ref<Legacy::Texture2D> m_Texture;

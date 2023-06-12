@@ -6,6 +6,7 @@
 #include <functional>
 #include <vector>
 #include <memory>
+#include <array>
 #include <string>
 #include <sstream>
 #include "log.h"
