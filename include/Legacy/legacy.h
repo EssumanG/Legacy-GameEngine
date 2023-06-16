@@ -8,6 +8,7 @@
 #include "../../src/Input.h"
 #include "../../src/MouseButtonCodes.h"
 #include "../../src/KeyCodes.h"
+#include "../../src/OrthographicCameraController.h"
 
 #include "../../src/Core/Timestep.h"
 

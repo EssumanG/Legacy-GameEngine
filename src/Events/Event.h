@@ -64,7 +64,7 @@ namespace Legacy {
         }
 
         template<typename T>
-        bool Dispatcher(EventFn<T> func)
+        bool Dispatch(EventFn<T> func)
         {
             if (m_Event.GetEventType() == T::GetStaticType())
             {

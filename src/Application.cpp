@@ -40,7 +40,7 @@ namespace Legacy
     void Application::OnEvent(Event& e)
     {
         EventDispatcher dispatcher(e);
-        dispatcher.Dispatcher<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
         
         // LG_CORE_TRACE("{0}",e.ToString());
         for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )

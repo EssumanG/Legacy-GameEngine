@@ -10,8 +10,7 @@ class ExampleLayer : public Legacy::Layer
 {
 public:
     ExampleLayer()
-        : Layer("Example"), m_Camera(-1.6f, 1.6f, -1.0f, 1.0f)
-    {
+        : Layer("Example"), m_CameraController(1280.0f / 720.0f, true)    {
 
         m_VertexArray.reset(Legacy::VertexArray::Create());
 
@@ -142,32 +141,18 @@ public:
 
     void OnUpdate(Legacy::Timestep ts) override
     {
-        float time = ts.GetTime();
-        if (Legacy::Input::isKeyPressed(LG_KEY_LEFT))
-             m_CameraPosition.x -= m_CameraMoveSpeed * time;
-        else if(Legacy::Input::isKeyPressed(LG_KEY_RIGHT))
-            m_CameraPosition.x += m_CameraMoveSpeed * time;
-        if(Legacy::Input::isKeyPressed(LG_KEY_UP))
-            m_CameraPosition.y += m_CameraMoveSpeed * time;
-        else if(Legacy::Input::isKeyPressed(LG_KEY_DOWN))
-            m_CameraPosition.y -= m_CameraMoveSpeed * time;
+        //OnUpdate
+        m_CameraController.OnUpdate(ts);
 
-        if(Legacy::Input::isKeyPressed(LG_KEY_A))
-            m_CameraRotation += m_CameraRatationSpeed * time;
-        if(Legacy::Input::isKeyPressed(LG_KEY_D))
-            m_CameraRotation -= m_CameraRatationSpeed * time;
-
-        
-
+        //Render
         Legacy::RenderCommand::SetClearColor({0.2f, 0.2f, 0.2f, 1.0f});
         Legacy::RenderCommand::Clear();
-        m_Camera.SetPosition(m_CameraPosition);
-        m_Camera.SetRotation(m_CameraRotation);
+ 
         // m_Camera.SetPosition({0.5f, 0.5f, 0.0f});
 
-        Legacy::Renderer::BeginScene(m_Camera);
+        Legacy::Renderer::BeginScene(m_CameraController.GetCamera());
 
-        glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1));
+        glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
         std::dynamic_pointer_cast<Legacy::OpenGLShader>(m_RectShader)->Bind();
         std::dynamic_pointer_cast<Legacy::OpenGLShader>(m_RectShader)->UploadUniformFloat3("u_Color", m_SquareColor);
@@ -203,8 +188,9 @@ public:
         ImGui::End();
     }
 
-    void OnEvent(Legacy::Event& event) override
+    void OnEvent(Legacy::Event& e) override
     {
+        m_CameraController.OnEvent(e);
     }
 
 private:
@@ -218,12 +204,8 @@ private:
 
         Legacy::Ref<Legacy::Texture2D> m_Texture;
         Legacy::Ref<Legacy::Texture2D> m_DinnerTextuer;
-        Legacy::OrthographicCamera m_Camera;
-        glm::vec3 m_CameraPosition;
-        float m_CameraMoveSpeed = 1.0;
-
-        float m_CameraRotation = 0.0f;
-        float m_CameraRatationSpeed = 100;
+        Legacy::OrthographicCameraController m_CameraController;
+    
 
         glm::vec3 m_SquareColor = { 0.3f, 0.4f, 0.9f };
 

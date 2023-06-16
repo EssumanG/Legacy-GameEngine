@@ -5,7 +5,8 @@ include_directories("${CMAKE_SOURCE_DIR}/vendor/spdlog/include"
                     "${CMAKE_SOURCE_DIR}/vendor/glad/include"
                     "${CMAKE_SOURCE_DIR}/vendor/Imgui"
                     "${CMAKE_SOURCE_DIR}/vendor/stb_image"
-                    "${CMAKE_CURRENT_SOURCE_DIR}")
+                    "${CMAKE_CURRENT_SOURCE_DIR}"
+                    "${CMAKE_SOURCE_DIR}")
 
 set(IMGUI_HEADERS "Imgui/ImGuiLayer.h" "${CMAKE_SOURCE_DIR}/vendor/Imgui/backends/imgui_impl_opengl3.h"
                   "${CMAKE_SOURCE_DIR}/vendor/Imgui/backends/imgui_impl_glfw.h")
@@ -35,7 +36,8 @@ set(HEADERS "${HAZEL_SOURCE_DIR}/include/Legacy/legacy.h"
             "Renderer/RenderCommand.h"
             "Renderer/VertexArray.h"
             "Renderer/Texture.h"
-            "Core/Timestep.h")
+            "Core/Timestep.h"
+            "OrthographicCameraController.h")
 set(SOURCES "Application.cpp"
             "log.cpp"
             "Layer.cpp"
@@ -47,7 +49,9 @@ set(SOURCES "Application.cpp"
             "Renderer/OrthographicCamera.cpp"
             "Renderer/RenderCommand.cpp"
             "Renderer/VertexArray.cpp"
-            "Renderer/Texture.cpp")
+            "Renderer/Texture.cpp"
+            "OrthographicCameraController.cpp"
+            )
 
 if (UNIX)
     list(APPEND HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Unix/UnixWindow.h"
