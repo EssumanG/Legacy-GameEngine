@@ -41,6 +41,7 @@ namespace Legacy
     {
         EventDispatcher dispatcher(e);
         dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+        dispatcher.Dispatch<WindowResizedEvent>(BIND_EVENT_FN(OnWindowResize));
         
         // LG_CORE_TRACE("{0}",e.ToString());
         for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
@@ -74,11 +75,13 @@ namespace Legacy
             float time = glfwGetTime();
             Timestep ts = time - m_LastFrameTime;
             m_LastFrameTime = time;
-            
-            for (Layer* layer : m_LayerStack)
+            if(!m_Minimized)
             {
-                layer->OnUpdate(ts);  
-            }
+                for (Layer* layer : m_LayerStack)
+                {
+                    layer->OnUpdate(ts);  
+                }     
+            }  
             m_ImGuiLayer->Begin();
             for (Layer* layer : m_LayerStack)
                 layer->OnImGuiRender();  
@@ -93,5 +96,17 @@ namespace Legacy
     {
         m_Runnig = false;
         return true;
+    }
+    bool Application::OnWindowResize(WindowResizedEvent &e)
+    {
+        if (e.GetWidth() == 0 || e.GetHeight() == 0)
+        {
+            m_Minimized = true;
+            return false;
+        }
+
+        m_Minimized = false;
+        Renderer::OnWindowResized(e.GetWidth(), e.GetHeight());
+        return false;
     }
 } // namespace Legacy
