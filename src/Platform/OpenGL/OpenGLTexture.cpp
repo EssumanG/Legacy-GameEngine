@@ -1,5 +1,5 @@
 #include "lg_pch.h"
-#include "Core.h"
+#include "Core/Core.h"
 #include "OpenGLTexture.h"
 #include "stb_image.h"
 

@@ -1,7 +1,7 @@
 #include "lg_pch.h"
 #include "UnixInput.h"
 #include "GLFW/glfw3.h"
-#include "Application.h"
+#include "Core/Application.h"
 
 
 namespace Legacy

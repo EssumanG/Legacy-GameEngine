@@ -9,7 +9,7 @@
 #include <array>
 #include <string>
 #include <sstream>
-#include "log.h"
+#include "./Core/log.h"
 
-#include "Core.h"
+#include "./Core/Core.h"
  
