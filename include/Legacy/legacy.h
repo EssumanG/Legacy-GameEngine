@@ -20,8 +20,6 @@
 #include "../../src/Renderer/VertexArray.h"
 #include "../../src/Renderer/OrthographicCamera.h"
 
-/*-----------Entry Point---------*/
-#include "../../src/Core/EntryPoint.h"
-/*-------------------------------*/
+
 
 // #include "../../src/Core/Core.h"

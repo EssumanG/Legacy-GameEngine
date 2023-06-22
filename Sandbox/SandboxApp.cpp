@@ -1,10 +1,13 @@
 // #include "../src/Test.h"
 #include <Legacy/legacy.h>
+#include <Core/EntryPoint.h>
 #include <imgui.h>
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "../src/Platform/OpenGL/OpenGLShader.h"
+#include "Platform/OpenGL/OpenGLShader.h"
+
+#include "Sandbox2D.h"
 
 class ExampleLayer : public Legacy::Layer
 {
@@ -12,7 +15,7 @@ public:
     ExampleLayer()
         : Layer("Example"), m_CameraController(1280.0f / 720.0)    {
 
-        m_VertexArray.reset(Legacy::VertexArray::Create());
+        m_VertexArray = Legacy::VertexArray::Create();
 
         float vertices[]={
             -0.5f, -0.5f, 0.0f, 0.8f, 0.3f, 0.2f, 1.0,
@@ -22,7 +25,7 @@ public:
 
 
         Legacy::Ref<Legacy::VertexBuffer> m_VertexBuffer;
-        m_VertexBuffer.reset(Legacy::VertexBuffer::Create(vertices, sizeof(vertices)));
+        m_VertexBuffer = Legacy::VertexBuffer::Create(vertices, sizeof(vertices));
         Legacy::BufferLayout layout =
         {
             {Legacy::ShaderDataType::Float3, "a_Position"},
@@ -34,7 +37,7 @@ public:
 
         uint32_t indices[]= {0, 1, 2};
         Legacy::Ref<Legacy::IndexBuffer> m_IndexBuffer; 
-        m_IndexBuffer.reset(Legacy::IndexBuffer::Create(indices, sizeof(indices)/sizeof(uint32_t)));
+        m_IndexBuffer = Legacy::IndexBuffer::Create(indices, sizeof(indices)/sizeof(uint32_t));
         m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
 
@@ -75,7 +78,7 @@ public:
         
 
 
-        m_RectVertexArray.reset(Legacy::VertexArray::Create());
+        m_RectVertexArray = Legacy::VertexArray::Create();
         float Rectvertices[]={
             -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
              0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
@@ -85,7 +88,7 @@ public:
 
 
         Legacy::Ref<Legacy::VertexBuffer> m_RectVertexBuffer;
-        m_RectVertexBuffer.reset(Legacy::VertexBuffer::Create(Rectvertices, sizeof(Rectvertices)));
+        m_RectVertexBuffer = Legacy::VertexBuffer::Create(Rectvertices, sizeof(Rectvertices));
         m_RectVertexBuffer->SetLayout({
             {Legacy::ShaderDataType::Float3, "a_Position"},
             {Legacy::ShaderDataType::Float2, "a_TexCoord"}
@@ -94,7 +97,7 @@ public:
         m_RectVertexArray->AddVertexBuffer(m_RectVertexBuffer);         
         uint32_t RectIndices[]= {0, 1, 2, 0, 2, 3};
         Legacy::Ref<Legacy::IndexBuffer> m_RectIndexBuffer; 
-        m_RectIndexBuffer.reset(Legacy::IndexBuffer::Create(RectIndices, sizeof(RectIndices)/sizeof(uint32_t)));
+        m_RectIndexBuffer = Legacy::IndexBuffer::Create(RectIndices, sizeof(RectIndices)/sizeof(uint32_t));
         m_RectVertexArray->SetIndexBuffer(m_RectIndexBuffer);
 
 
@@ -215,6 +218,7 @@ class Sandbox : public Legacy::Application
 public:
     Sandbox()
     {
+        PushLayer(new Sandbox2D());
         PushLayer(new ExampleLayer());
     }
 

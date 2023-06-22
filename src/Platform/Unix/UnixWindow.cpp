@@ -153,6 +153,7 @@ namespace Legacy
             MouseScrolledEvent event((float)xoffset, (float)yoffset);
             data.EventCallback(event);
         });
+        
 
         glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xpos, double ypos)
         {
