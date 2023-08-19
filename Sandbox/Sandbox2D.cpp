@@ -11,30 +11,7 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::OnAttach()
 {    
-    m_RectVertexArray = Legacy::VertexArray::Create();
-    float Rectvertices[]={
-        -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            0.5f,  0.5f, 0.0f,
-        -0.5f,  0.5f, 0.0f
-    };
-
-
-    Legacy::Ref<Legacy::VertexBuffer> m_RectVertexBuffer;
-    m_RectVertexBuffer = Legacy::VertexBuffer::Create(Rectvertices, sizeof(Rectvertices));
-    m_RectVertexBuffer->SetLayout({
-        {Legacy::ShaderDataType::Float3, "a_Position"},
-    });
-
-    m_RectVertexArray->AddVertexBuffer(m_RectVertexBuffer);         
-    uint32_t RectIndices[]= {0, 1, 2, 0, 2, 3};
-    Legacy::Ref<Legacy::IndexBuffer> m_RectIndexBuffer; 
-    m_RectIndexBuffer = Legacy::IndexBuffer::Create(RectIndices, sizeof(RectIndices)/sizeof(uint32_t));
-    m_RectVertexArray->SetIndexBuffer(m_RectIndexBuffer);
-
     
-    m_RectShader = Legacy::Shader::Create("/home/essuman/projects/C_or_C++_projects/Game Engine/Leagacy/Sandbox/assets/shaders/RectColor.glsl");
-
 }
 
 void Sandbox2D::OnDetach()
@@ -47,20 +24,24 @@ void Sandbox2D::OnUpdate(Legacy::Timestep ts)
     m_CameraController.OnUpdate(ts);
 
     //Render
-    Legacy::RenderCommand::SetClearColor({0.2f, 0.2f, 0.2f, 1.0f});
+    Legacy::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
     Legacy::RenderCommand::Clear();
 
     // m_Camera.SetPosition({0.5f, 0.5f, 0.0f});
 
-    Legacy::Renderer::BeginScene(m_CameraController.GetCamera());
+    Legacy::Renderer2D::BeginScene(m_CameraController.GetCamera());
+    
+    
+    Legacy::Renderer2D::BeginScene(m_CameraController.GetCamera());
+    Legacy::Renderer2D::DrawQuad({0.0f, 0.0f}, {1.0f, 1.0f}, {0.8f, 0.2f, 0.3f, 1.0f});
+    Legacy::Renderer2D::EndScene();
 
-    std::dynamic_pointer_cast<Legacy::OpenGLShader>(m_RectShader)->Bind();
-    std::dynamic_pointer_cast<Legacy::OpenGLShader>(m_RectShader)->UploadUniformFloat4("u_Color", m_SquareColor);
+    //TODO: Add these functions - Shader::SetMat4, Shader::SetFLoat4
+    // std::dynamic_pointer_cast<Legacy::OpenGLShader>(m_RectShader)->Bind();
+    // std::dynamic_pointer_cast<Legacy::OpenGLShader>(m_RectShader)->UploadUniformFloat4("u_Color", m_SquareColor);
+     
 
-    Legacy::Renderer::Submit(m_RectShader, m_RectVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5)));
-
-    Legacy::Renderer::EndScene();
-
+    Legacy::Renderer2D::EndScene();
 }
 
 void Sandbox2D::OnEvent(Legacy::Event &e)

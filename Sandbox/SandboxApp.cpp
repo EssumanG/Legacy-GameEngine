@@ -218,7 +218,7 @@ class Sandbox : public Legacy::Application
 public:
     Sandbox()
     {
-        PushLayer(new ExampleLayer());
+        // PushLayer(new ExampleLayer());
         PushLayer(new Sandbox2D());
     }
 

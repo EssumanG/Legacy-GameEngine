@@ -1,7 +1,9 @@
 #include "lg_pch.h"
 
 #include "Renderer.h"
+#include "Renderer2D.h"
 #include "Platform/OpenGL/OpenGLShader.h"
+
 
 namespace Legacy
 {
@@ -10,6 +12,7 @@ namespace Legacy
     void Renderer::Init()
     {
         RenderCommand::Init();
+        Renderer2D::Init();
     }
     void Renderer::OnWindowResized(uint32_t width, uint32_t height)
     {
