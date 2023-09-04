@@ -3,9 +3,7 @@
 #include "Shader.h"
 #include "VertexArray.h"
 #include "RenderCommand.h"
-
-#include "Platform/OpenGL/OpenGLShader.h"
-
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace Legacy
 {
@@ -14,6 +12,7 @@ namespace Legacy
     {
         Ref<VertexArray> QuadVertexArray;
         Ref<Shader> RectShader;
+        Ref<Shader> TextureShader;
     };
 
     static Renderer2DStorage* s_Data;
@@ -23,10 +22,10 @@ namespace Legacy
         s_Data = new Renderer2DStorage();
         s_Data->QuadVertexArray = VertexArray::Create();
         float Rectvertices[]={
-            -0.5f, -0.5f, 0.0f,
-             0.5f, -0.5f, 0.0f,
-             0.5f,  0.5f, 0.0f,
-            -0.5f,  0.5f, 0.0f
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+             0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+             0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+            -0.5f,  0.5f, 0.0f, 0.0f, 1.0f
         };
 
 
@@ -34,6 +33,7 @@ namespace Legacy
     m_RectVertexBuffer = VertexBuffer::Create(Rectvertices, sizeof(Rectvertices));
     m_RectVertexBuffer->SetLayout({
         {ShaderDataType::Float3, "a_Position"},
+        {ShaderDataType::Float2, "a_TexCoord"}
     });
 
     s_Data->QuadVertexArray->AddVertexBuffer(m_RectVertexBuffer);         
@@ -44,6 +44,9 @@ namespace Legacy
 
     
     s_Data->RectShader = Shader::Create("/home/essuman/projects/C_or_C++_projects/Game Engine/Leagacy/Sandbox/assets/shaders/RectColor.glsl");
+    s_Data->TextureShader = Shader::Create("/home/essuman/projects/C_or_C++_projects/Game Engine/Leagacy/Sandbox/assets/shaders/Texture.glsl");
+    s_Data->TextureShader->Bind();
+    s_Data->TextureShader->SetInt("u_Texture", 0);
 
     }
 
@@ -54,9 +57,11 @@ namespace Legacy
 
     void Renderer2D::BeginScene(const OrthographicCamera &camera)
     {
-        std::dynamic_pointer_cast<OpenGLShader>(s_Data->RectShader)->Bind();
-        std::dynamic_pointer_cast<OpenGLShader>(s_Data->RectShader)->UploadUniformMat4("u_ViewProjectionMatrix", camera.GetViewProjectionMatrix());
-        std::dynamic_pointer_cast<OpenGLShader>(s_Data->RectShader)->UploadUniformMat4("u_Transform", glm::mat4(1.0f));
+        s_Data->RectShader->Bind();
+        s_Data->RectShader->SetMat4("u_ViewProjectionMatrix", camera.GetViewProjectionMatrix());
+        
+        s_Data->TextureShader->Bind();
+        s_Data->TextureShader->SetMat4("u_ViewProjectionMatrix", camera.GetViewProjectionMatrix());
     }
 
     void Renderer2D::EndScene()
@@ -70,8 +75,30 @@ namespace Legacy
 
     void Renderer2D::DrawQuad(const glm::vec3 &position, const glm::vec2 &size, const glm::vec4 &color)
     {
-        std::dynamic_pointer_cast<OpenGLShader>(s_Data->RectShader)->Bind();
-        std::dynamic_pointer_cast<OpenGLShader>(s_Data->RectShader)->UploadUniformFloat4("u_Color", color);
+        s_Data->RectShader->Bind();
+        s_Data->RectShader->SetFloat4("u_Color", color);
+        
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0), {size.x, size.y, 1.0f});
+        s_Data->RectShader->SetMat4("u_Transform", transform);
+
+        s_Data->QuadVertexArray->Bind();
+        RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+    }
+
+    void Renderer2D::DrawQuad(const glm::vec2 &position, const glm::vec2 &size, const Ref<Texture2D> &texture)
+    {
+        DrawQuad({position.x,position.y, 0.0f}, size, texture);
+    }
+
+    void Renderer2D::DrawQuad(const glm::vec3 &position, const glm::vec2 &size, const Ref<Texture2D> &texture)
+    {
+        s_Data->TextureShader->Bind();
+
+        
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0), {size.x, size.y, 1.0f});
+        s_Data->TextureShader->SetMat4("u_Transform", transform);
+
+        texture->Bind();
 
         s_Data->QuadVertexArray->Bind();
         RenderCommand::DrawIndexed(s_Data->QuadVertexArray);

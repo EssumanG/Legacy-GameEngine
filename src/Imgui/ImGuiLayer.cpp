@@ -93,12 +93,6 @@ namespace Legacy
 
 
     }
-
-    void ImGuiLayer::OnImGuiRender()
-    {
-        static bool show = true;
-        ImGui::ShowDemoWindow(&show);
-    }
     /* Implementing Your Own event handling*/
     // void ImGuiLayer::OnEvent(Event &e)
     // {
