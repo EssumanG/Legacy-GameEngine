@@ -10,7 +10,6 @@ To clone the Legacy Game Engine repository, follow the steps below:
 
             https://github.com/EssumanG/Legacy-GameEngine.git
 
-Replace repository-url with the actual URL of the Git repository.
 Technologies Used
 
 ## Technologies

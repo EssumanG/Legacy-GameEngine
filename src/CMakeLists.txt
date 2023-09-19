@@ -15,6 +15,7 @@ set(STB_IMG_FILES "${CMAKE_SOURCE_DIR}/vendor/stb_image/stb_image.cpp")
 
 list(APPEND IMGUI_FILES ${IMGUI_HEADERS} ${IMGUI_SOURCES})
 set(HEADERS "${HAZEL_SOURCE_DIR}/include/Legacy/legacy.h" 
+            "Debug/Instrumentor.h"
             "Core/Core.h"
             "Core/Application.h"
             "Core/EntryPoint.h"

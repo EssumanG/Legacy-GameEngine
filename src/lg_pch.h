@@ -12,4 +12,5 @@
 #include "./Core/log.h"
 
 #include "./Core/Core.h"
+#include "./Debug/Instrumentor.h"
  
