@@ -20,16 +20,21 @@ namespace Legacy
 
     UnixWindow::UnixWindow(const WindowProps& props)
     {
+        LG_PROFILE_FUNCTION();
         Init(props);
     }
 
     UnixWindow::~UnixWindow()
     {
+        LG_PROFILE_FUNCTION();
+
         ShutDown();
     }
 
     void UnixWindow::OnUpdate()
     {
+        LG_PROFILE_FUNCTION();
+
         glfwPollEvents();
         m_Context->SwapBuffers();
 
@@ -37,6 +42,8 @@ namespace Legacy
 
     void UnixWindow::SetVSync(bool enabled)
     {
+        LG_PROFILE_FUNCTION();
+
         if(enabled)
         {
             glfwSwapInterval(1);
@@ -56,6 +63,8 @@ namespace Legacy
 
     void UnixWindow::Init(const WindowProps &props)
     {
+        LG_PROFILE_FUNCTION();
+
         m_Data.Title = props.Title;
         m_Data.Width = props.Width;
         m_Data.Height = props.Height;
@@ -67,16 +76,20 @@ namespace Legacy
 
         if(!s_GLFWInitialized)
         {
+            LG_PROFILE_SCOPE("glfwInit");
             int success = glfwInit();
             LG_CORE_ASSERT(success, "Could not Initialize GLFW");
             glfwSetErrorCallback(GLFWErrorCallback);
             s_GLFWInitialized = true;
         }
 
-        m_Window = glfwCreateWindow((int)m_Data.Width, (int)m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
-        m_Context = new OpenGLContext(m_Window);
-        m_Context->Init();
-
+        {
+            LG_PROFILE_SCOPE("glfwCreateWindow");
+            m_Window = glfwCreateWindow((int)m_Data.Width, (int)m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
+            m_Context = new OpenGLContext(m_Window);
+            m_Context->Init();
+        }
+        
         
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
@@ -174,6 +187,8 @@ namespace Legacy
 
     void UnixWindow::ShutDown()
     {
+        LG_PROFILE_FUNCTION();
+
         glfwDestroyWindow(m_Window);
     }
 

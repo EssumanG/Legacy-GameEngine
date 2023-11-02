@@ -11,6 +11,8 @@ namespace Legacy
    
     void Renderer::Init()
     {
+        LG_PROFILE_FUNCTION();
+        
         RenderCommand::Init();
         Renderer2D::Init();
     }

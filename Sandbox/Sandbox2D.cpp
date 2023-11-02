@@ -10,12 +10,15 @@ Sandbox2D::Sandbox2D()
 }
 
 void Sandbox2D::OnAttach()
-{    
+{   
+    LG_PROFILE_FUNCTION();
+        
     m_Texture = Legacy::Texture2D::Create("/home/essuman/projects/C_or_C++_projects/Game Engine/Leagacy/Sandbox/assets/textures/texture.jpg");
 }
 
 void Sandbox2D::OnDetach()
 {
+    LG_PROFILE_FUNCTION();
 }
 
 void Sandbox2D::OnUpdate(Legacy::Timestep ts)
@@ -23,10 +26,9 @@ void Sandbox2D::OnUpdate(Legacy::Timestep ts)
     LG_PROFILE_FUNCTION();
 
     //OnUpdate
-    {
-        LG_PROFILE_SCOPE("CameraController::OnUpdate");
-        m_CameraController.OnUpdate(ts);
-    }
+
+    m_CameraController.OnUpdate(ts);
+   
 
     //Render
     {

@@ -19,6 +19,8 @@ namespace Legacy
 
     Application::Application()
     {
+        LG_PROFILE_FUNCTION();
+        
         LG_CORE_ASSERT(!s_Instance, "Application Already exists!")
         s_Instance = this;
 
@@ -39,6 +41,8 @@ namespace Legacy
 
     void Application::OnEvent(Event& e)
     {
+        LG_PROFILE_FUNCTION();
+        
         EventDispatcher dispatcher(e);
         dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
         dispatcher.Dispatch<WindowResizedEvent>(BIND_EVENT_FN(OnWindowResize));
@@ -55,37 +59,51 @@ namespace Legacy
 
     void Application::PushLayer(Layer* layer)
     {
+        LG_PROFILE_FUNCTION();
+        
         m_LayerStack.PushLayer(layer);
         layer->OnAttach();
     }
 
     void Application::PushOverlay(Layer* overlay)
     {
+        LG_PROFILE_FUNCTION();
+        
         m_LayerStack.PushOverlay(overlay);
         overlay->OnAttach();
     }
 
     void Application::Run()
     {
+        LG_PROFILE_FUNCTION();
         
         
         while(m_Runnig)
         {
+            LG_PROFILE_SCOPE("RunLoop");
 
             float time = glfwGetTime();
             Timestep ts = time - m_LastFrameTime;
             m_LastFrameTime = time;
             if(!m_Minimized)
             {
-                for (Layer* layer : m_LayerStack)
-                {
-                    layer->OnUpdate(ts);  
-                }     
+               {
+                    LG_PROFILE_SCOPE("LayerStack OnUpdates");
+        
+                    for (Layer* layer : m_LayerStack)
+                    {
+                        layer->OnUpdate(ts);  
+                    }
+               }     
             }  
             m_ImGuiLayer->Begin();
-            for (Layer* layer : m_LayerStack)
-                layer->OnImGuiRender();  
-            m_ImGuiLayer->End();;
+            {
+                LG_PROFILE_SCOPE("LayerStack OnImGuiRender");
+                
+                for (Layer* layer : m_LayerStack)
+                    layer->OnImGuiRender();  
+                m_ImGuiLayer->End();;
+            }
 
             m_Window->OnUpdate();
 
@@ -99,6 +117,8 @@ namespace Legacy
     }
     bool Application::OnWindowResize(WindowResizedEvent &e)
     {
+        LG_PROFILE_FUNCTION();
+        
         if (e.GetWidth() == 0 || e.GetHeight() == 0)
         {
             m_Minimized = true;

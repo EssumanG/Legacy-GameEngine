@@ -16,6 +16,8 @@ namespace Legacy
 
     void OrthographicCameraController::OnUpdate(Timestep ts)
     {
+        LG_PROFILE_FUNCTION();
+        
         float time = ts.GetTime();
         if (Input::isKeyPressed(LG_KEY_A))
              m_CameraPosition.x -= m_CameraTranslationSpeed * time;
@@ -42,6 +44,8 @@ namespace Legacy
 
     void OrthographicCameraController::OnEvent(Event &e)
     {
+        LG_PROFILE_FUNCTION();
+        
         EventDispatcher dispatcher(e);
         dispatcher.Dispatch<MouseScrolledEvent>(LG_BIND_EVENT_FN(OrthographicCameraController::OnMouseScrolled));
         dispatcher.Dispatch<WindowResizedEvent>(LG_BIND_EVENT_FN(OrthographicCameraController::OnWindowResized));
@@ -49,6 +53,8 @@ namespace Legacy
 
     bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent &e)
     {
+        LG_PROFILE_FUNCTION();
+        
         m_ZoomLevel -= e.GetYOffset() * 0.25f;
         m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
         m_Camera.setProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
@@ -57,6 +63,8 @@ namespace Legacy
 
     bool OrthographicCameraController::OnWindowResized(WindowResizedEvent &e)
     {
+        LG_PROFILE_FUNCTION();
+        
         m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
         m_Camera.setProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
         return false;

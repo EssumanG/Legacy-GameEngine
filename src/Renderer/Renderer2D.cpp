@@ -19,6 +19,8 @@ namespace Legacy
 
     void Renderer2D::Init()
     {
+        LG_PROFILE_FUNCTION();
+
         s_Data = new Renderer2DStorage();
         s_Data->QuadVertexArray = VertexArray::Create();
         float Rectvertices[]={
@@ -52,11 +54,15 @@ namespace Legacy
 
     void Renderer2D::Shutdown()
     {
+        LG_PROFILE_FUNCTION();
+        
         delete s_Data;
     }
 
     void Renderer2D::BeginScene(const OrthographicCamera &camera)
     {
+        LG_PROFILE_FUNCTION();
+        
         s_Data->RectShader->Bind();
         s_Data->RectShader->SetMat4("u_ViewProjectionMatrix", camera.GetViewProjectionMatrix());
         
@@ -66,6 +72,8 @@ namespace Legacy
 
     void Renderer2D::EndScene()
     {
+        LG_PROFILE_FUNCTION();
+        
     }
 
     void Renderer2D::DrawQuad(const glm::vec2 &position, const glm::vec2 &size, const glm::vec4 &color)
@@ -75,6 +83,8 @@ namespace Legacy
 
     void Renderer2D::DrawQuad(const glm::vec3 &position, const glm::vec2 &size, const glm::vec4 &color)
     {
+        LG_PROFILE_FUNCTION();
+        
         s_Data->RectShader->Bind();
         s_Data->RectShader->SetFloat4("u_Color", color);
         
@@ -92,6 +102,8 @@ namespace Legacy
 
     void Renderer2D::DrawQuad(const glm::vec3 &position, const glm::vec2 &size, const Ref<Texture2D> &texture)
     {
+        LG_PROFILE_FUNCTION();
+        
         s_Data->TextureShader->Bind();
 
         

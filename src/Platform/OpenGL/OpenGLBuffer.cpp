@@ -10,6 +10,8 @@ namespace Legacy
     // ///////////////////////////////////////////////////////////////
     OpenGLVertexBuffer::OpenGLVertexBuffer(float *vertices, uint32_t size)
     {
+        LG_PROFILE_FUNCTION();
+
         glGenBuffers(1, &m_RendererID);
         glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 
@@ -18,16 +20,22 @@ namespace Legacy
 
     OpenGLVertexBuffer::~OpenGLVertexBuffer()
     {
+        LG_PROFILE_FUNCTION();
+
         glDeleteBuffers(1, &m_RendererID);
     }
 
     void OpenGLVertexBuffer::Bind() const
     {
+        LG_PROFILE_FUNCTION();
+
         glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
     }
 
     void OpenGLVertexBuffer::UnBind() const
     {
+        LG_PROFILE_FUNCTION();
+
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
@@ -39,6 +47,8 @@ namespace Legacy
     OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count)
         :m_Count(count)
     {
+        LG_PROFILE_FUNCTION();
+
         glGenBuffers(1, &m_RendererID);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
 
@@ -47,16 +57,22 @@ namespace Legacy
 
     OpenGLIndexBuffer::~OpenGLIndexBuffer()
     {
+        LG_PROFILE_FUNCTION();
+
         glDeleteBuffers(1, &m_RendererID);
     }
 
     void OpenGLIndexBuffer::Bind() const
     {
+        LG_PROFILE_FUNCTION();
+
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
     }
 
     void OpenGLIndexBuffer::UnBind() const
     {
+        LG_PROFILE_FUNCTION();
+        
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 

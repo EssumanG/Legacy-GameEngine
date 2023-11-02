@@ -15,6 +15,8 @@ namespace Legacy
 
     void OpenGLContext::Init()
     {
+        LG_PROFILE_FUNCTION();
+
         glfwMakeContextCurrent(m_WindowHandle);
 
         int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
@@ -27,6 +29,8 @@ namespace Legacy
 
     void OpenGLContext::SwapBuffers()
     {
+        LG_PROFILE_FUNCTION();
+
         glBegin(GL_TRIANGLES);
         glEnd();
         glfwSwapBuffers(m_WindowHandle);

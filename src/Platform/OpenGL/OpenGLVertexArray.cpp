@@ -27,21 +27,29 @@ namespace Legacy
 
     OpenGLVertexArray::OpenGLVertexArray()
     {
+        LG_PROFILE_FUNCTION();
+
         glGenVertexArrays(1, &m_RendererID);
     }
 
     void OpenGLVertexArray::Bind() const
     {
+        LG_PROFILE_FUNCTION();
+
         glBindVertexArray(m_RendererID);
     }
 
     void OpenGLVertexArray::UnBind() const
     {
+        LG_PROFILE_FUNCTION();
+
         glBindVertexArray(0);
     }
 
     void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer> &vertexBuffer)
     {
+        LG_PROFILE_FUNCTION();
+
         LG_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has no layout!");
         
         glBindVertexArray(m_RendererID);
@@ -66,6 +74,8 @@ namespace Legacy
 
     void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer> &indexBuffer)
     {
+        LG_PROFILE_FUNCTION();
+        
         glBindVertexArray(m_RendererID);
         indexBuffer->Bind();
 
